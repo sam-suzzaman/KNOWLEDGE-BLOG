@@ -7,3 +7,4 @@
 -   Daisy UI
 -   React Router Dom
 -   React Icons
+-   React Hook Form
