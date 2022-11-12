@@ -1,7 +1,7 @@
 import "./App.css";
 
 function App() {
-    return <h2>welcome react testing</h2>;
+    return <h1>welcome react testing</h1>;
 }
 
 export default App;
