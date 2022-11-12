@@ -6,3 +6,4 @@
 -   Tailwind CSS
 -   Daisy UI
 -   React Router Dom
+-   React Icons

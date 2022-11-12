@@ -1,7 +1,13 @@
 import React from "react";
 
+import Banner from "../components/nonShared/HomePage/Banner";
+
 const HomePage = () => {
-    return <div>this is home page</div>;
+    return (
+        <>
+            <Banner />
+        </>
+    );
 };
 
 export default HomePage;
