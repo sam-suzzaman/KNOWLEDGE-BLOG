@@ -5,3 +5,4 @@
 -   React JS
 -   Tailwind CSS
 -   Daisy UI
+-   React Router Dom
