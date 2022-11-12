@@ -19,6 +19,9 @@ const port = 5000;
 // main routes
 
 // default route
+app.get("/test", (req, res) => {
+    res.send("Testing route");
+});
 app.get("/", (req, res) => {
     res.send("Server is Running");
 });
