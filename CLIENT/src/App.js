@@ -16,6 +16,7 @@ import RegisterPage from "./pages/RegisterPage";
 import UserDashboardPage from "./pages/UserDashboardPage";
 import UserFavouritePage from "./pages/UserFavouritePage";
 import UserProfilePage from "./pages/UserProfilePage";
+import SingleBlogPage from "./pages/SingleBlogPage";
 
 function App() {
     return (
@@ -30,6 +31,10 @@ function App() {
                 <Route path="/userFavourite" element={<UserFavouritePage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route
+                    path="/singleBlog/:blogID"
+                    element={<SingleBlogPage />}
+                />
                 <Route path="/commingSoon" element={<CommingSoonPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>

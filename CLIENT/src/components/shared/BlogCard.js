@@ -58,7 +58,7 @@ const BlogCard = () => {
                 </p>
             </div>
             <div className=" flex justify-center mb-6">
-                <Button btnPath="/" btnName="read more" />
+                <Button btnPath="/singleBlog/1" btnName="read more" />
             </div>
         </div>
     );

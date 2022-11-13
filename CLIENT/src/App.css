@@ -24,3 +24,22 @@
 }
 
 /* ------------------------- */
+
+/* Signle Blogs page */
+@media (min-width: 640px) {
+    .single_blog_wrapper .breadcrumbs > ul > li + *:before {
+        background-color: transparent;
+        opacity: 1;
+        height: 0.75rem;
+        width: 0.75rem;
+        border-top: 3px solid;
+        border-right: 3px solid;
+        margin-bottom: -5px;
+    }
+}
+@media (max-width: 350px) {
+    .single_blog_wrapper .breadcrumbs > ul > li + *:before {
+        margin-left: 0.1rem;
+        margin-right: 0.2rem;
+    }
+}
