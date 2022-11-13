@@ -3,26 +3,25 @@ import { CiFacebook } from "react-icons/ci";
 import { AiFillTwitterCircle, AiOutlineGithub } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import SmallBlogCard from "../components/nonShared/SingleBlogPage/SmallBlogCard";
+import TextHero from "../components/shared/TextHero";
 
 const SingleBlogPage = () => {
     return (
         <>
             <div className="single_blog_wrapper">
-                <div className="border-t-[1px] border-[#03d6a1]">
-                    <div className="hero-content bg-accent max-w-none text-primary justify-start w-full py-4 px-4 md:px-8 sm:py-12">
-                        <div className="text-xs sm:text-lg md:text-3xl font-bold breadcrumbs">
-                            <ul>
-                                <li className="">
-                                    <a>Home</a>
-                                </li>
-                                <li>
-                                    <a>Documents</a>
-                                </li>
-                                <li>Add Document</li>
-                            </ul>
-                        </div>
+                <TextHero>
+                    <div className="text-xs sm:text-lg md:text-3xl font-bold breadcrumbs">
+                        <ul>
+                            <li className="">
+                                <a>Home</a>
+                            </li>
+                            <li>
+                                <a>Documents</a>
+                            </li>
+                            <li>Add Document</li>
+                        </ul>
                     </div>
-                </div>
+                </TextHero>
             </div>
             {/* Content Part */}
             <div className="w-full max-w-7xl mx-auto rounded-t-md my-16 px-6">
