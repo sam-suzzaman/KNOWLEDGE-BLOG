@@ -6,7 +6,11 @@ import { Link } from "react-router-dom";
 const RegisterPage = () => {
     const [showPassowrd, setShowPassword] = useState(false);
 
-    const { register, handleSubmit } = useForm();
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+    } = useForm();
 
     const handleFormSubmit = (data) => console.log(data);
 
@@ -37,12 +41,16 @@ const RegisterPage = () => {
                                     type="text"
                                     placeholder="Type here"
                                     className="input input-bordered"
+                                    {...register("username", {
+                                        required: true,
+                                    })}
                                 />
-                                <label className="label">
+
+                                {errors.username?.type === "required" && (
                                     <span className="label-text-alt text-red-600 font-medium ">
-                                        Alt label
+                                        username is required
                                     </span>
-                                </label>
+                                )}
                             </div>
 
                             {/* Email Single Input Field */}
@@ -146,7 +154,10 @@ const RegisterPage = () => {
                             </div>
 
                             <div className="flex justify-center mt-4">
-                                <button className="btn btn-xs sm:btn-sm md:px-10  bg-accent text-base-100 border-accent mt-4">
+                                <button
+                                    type="submit"
+                                    className="btn btn-xs sm:btn-sm md:px-10  bg-accent text-base-100 border-accent mt-4"
+                                >
                                     create account
                                 </button>
                             </div>
