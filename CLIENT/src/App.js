@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 // Components
 import Navbar from "./components/shared/Navbar";
+import Footer from "./components/shared/Footer";
 
 // Pages
 import HomePage from "./pages/HomePage";
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/commingSoon" element={<CommingSoonPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
+            <Footer />
         </>
     );
 }
