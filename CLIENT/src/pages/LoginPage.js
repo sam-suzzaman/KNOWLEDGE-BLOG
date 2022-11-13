@@ -46,12 +46,22 @@ const LoginPage = () => {
                                     type="email"
                                     placeholder="Type here"
                                     className="input input-bordered"
+                                    {...register("email", {
+                                        required: true,
+                                        pattern:
+                                            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i,
+                                    })}
                                 />
-                                <label className="label">
+                                {errors.email?.type === "required" && (
                                     <span className="label-text-alt text-red-600 font-medium ">
-                                        Alt label
+                                        email is required
                                     </span>
-                                </label>
+                                )}
+                                {errors.email?.type === "pattern" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        enter a valid email
+                                    </span>
+                                )}
                             </div>
 
                             {/* Password Single Input Field */}
@@ -70,6 +80,13 @@ const LoginPage = () => {
                                     }`}
                                     placeholder="Type here"
                                     className="input input-bordered "
+                                    {...register("password", {
+                                        required: true,
+                                        minLength: 8,
+                                        maxLength: 20,
+                                        pattern:
+                                            /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/gi,
+                                    })}
                                 />
                                 {!showPassowrd ? (
                                     <AiFillEye
@@ -86,11 +103,27 @@ const LoginPage = () => {
                                         }
                                     />
                                 )}
-                                <label className="label">
+                                {errors.password?.type === "required" && (
                                     <span className="label-text-alt text-red-600 font-medium ">
-                                        Alt label
+                                        password is required
                                     </span>
-                                </label>
+                                )}
+                                {errors.password?.type === "minLength" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        password at least 8 character
+                                    </span>
+                                )}
+                                {errors.password?.type === "maxLength" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        password must be in 20 character
+                                    </span>
+                                )}
+                                {errors.password?.type === "pattern" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        must contain one digit and a special
+                                        character
+                                    </span>
+                                )}
                             </div>
 
                             <div className="flex justify-center mt-4">

@@ -43,12 +43,30 @@ const RegisterPage = () => {
                                     className="input input-bordered"
                                     {...register("username", {
                                         required: true,
+                                        minLength: 3,
+                                        maxLength: 20,
+                                        pattern: /^[A-Za-z]+$/i,
                                     })}
                                 />
 
                                 {errors.username?.type === "required" && (
                                     <span className="label-text-alt text-red-600 font-medium ">
                                         username is required
+                                    </span>
+                                )}
+                                {errors.username?.type === "minLength" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        username must be 3 character
+                                    </span>
+                                )}
+                                {errors.username?.type === "maxLength" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        username must be in 20 character
+                                    </span>
+                                )}
+                                {errors.username?.type === "pattern" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        username only contains letter
                                     </span>
                                 )}
                             </div>
@@ -67,12 +85,22 @@ const RegisterPage = () => {
                                     type="email"
                                     placeholder="Type here"
                                     className="input input-bordered"
+                                    {...register("email", {
+                                        required: true,
+                                        pattern:
+                                            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i,
+                                    })}
                                 />
-                                <label className="label">
+                                {errors.email?.type === "required" && (
                                     <span className="label-text-alt text-red-600 font-medium ">
-                                        Alt label
+                                        email is required
                                     </span>
-                                </label>
+                                )}
+                                {errors.email?.type === "pattern" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        enter a valid email
+                                    </span>
+                                )}
                             </div>
 
                             {/* Password Single Input Field */}
@@ -91,6 +119,13 @@ const RegisterPage = () => {
                                     }`}
                                     placeholder="Type here"
                                     className="input input-bordered "
+                                    {...register("password", {
+                                        required: true,
+                                        minLength: 8,
+                                        maxLength: 20,
+                                        pattern:
+                                            /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/gi,
+                                    })}
                                 />
                                 {!showPassowrd ? (
                                     <AiFillEye
@@ -107,14 +142,30 @@ const RegisterPage = () => {
                                         }
                                     />
                                 )}
-                                <label className="label">
+                                {errors.password?.type === "required" && (
                                     <span className="label-text-alt text-red-600 font-medium ">
-                                        Alt label
+                                        password is required
                                     </span>
-                                </label>
+                                )}
+                                {errors.password?.type === "minLength" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        password at least 8 character
+                                    </span>
+                                )}
+                                {errors.password?.type === "maxLength" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        password must be in 20 character
+                                    </span>
+                                )}
+                                {errors.password?.type === "pattern" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        must contain one digit and a special
+                                        character
+                                    </span>
+                                )}
                             </div>
 
-                            {/* Confirm Password Single Input Field */}
+                            {/* confirm password Input Field */}
                             <div className="form-control relative">
                                 <label className="label ">
                                     <span className="label-text font-semibold capitalize text-primary text-base">
@@ -130,6 +181,13 @@ const RegisterPage = () => {
                                     }`}
                                     placeholder="Type here"
                                     className="input input-bordered "
+                                    {...register("confirmPassword", {
+                                        required: true,
+                                        minLength: 8,
+                                        maxLength: 20,
+                                        pattern:
+                                            /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/gi,
+                                    })}
                                 />
                                 {!showPassowrd ? (
                                     <AiFillEye
@@ -146,13 +204,33 @@ const RegisterPage = () => {
                                         }
                                     />
                                 )}
-                                <label className="label">
+                                {errors.confirmPassword?.type ===
+                                    "required" && (
                                     <span className="label-text-alt text-red-600 font-medium ">
-                                        Alt label
+                                        password is required
                                     </span>
-                                </label>
+                                )}
+                                {errors.confirmPassword?.type ===
+                                    "minLength" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        password at least 8 character
+                                    </span>
+                                )}
+                                {errors.confirmPassword?.type ===
+                                    "maxLength" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        password must be in 20 character
+                                    </span>
+                                )}
+                                {errors.confirmPassword?.type === "pattern" && (
+                                    <span className="label-text-alt text-red-600 font-medium ">
+                                        must contain one digit and a special
+                                        character
+                                    </span>
+                                )}
                             </div>
 
+                            {/* Submit button */}
                             <div className="flex justify-center mt-4">
                                 <button
                                     type="submit"
@@ -162,6 +240,7 @@ const RegisterPage = () => {
                                 </button>
                             </div>
                         </form>
+                        
                         <p className="text-center text-sm text-primary mt-3">
                             Already have an account?{" "}
                             <Link
