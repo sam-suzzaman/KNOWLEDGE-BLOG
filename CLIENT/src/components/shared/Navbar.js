@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import SidebarToggleBtn from "../nonShared/UserProfile/SidebarToggleBtn";
 
 const Navbar = () => {
     const user = false;
@@ -7,7 +8,8 @@ const Navbar = () => {
         <div className="bg-accent px-4 main_navbar">
             <div className="md:navbar w-full max-w-screen-xl mx-auto">
                 {/* start part */}
-                <div className="md:navbar-start flex justify-between w-100">
+                <div className="md:navbar-start flex justify-between items-center w-100">
+                    <SidebarToggleBtn />
                     <Link to="/" className="font-bold text-base-200 text-base">
                         <span className="text-3xl text-primary">K</span>
                         nowledge

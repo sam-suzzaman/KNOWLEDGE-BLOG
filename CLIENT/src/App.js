@@ -17,6 +17,9 @@ import UserDashboardPage from "./pages/UserDashboardPage";
 import UserFavouritePage from "./pages/UserFavouritePage";
 import UserProfilePage from "./pages/UserProfilePage";
 import SingleBlogPage from "./pages/SingleBlogPage";
+import MyInfoPage from "./pages/MyInfoPage";
+import ChangeUserPassword from "./pages/ChangeUserPassword";
+import UpdateUserInfoPage from "./pages/UpdateUserInfoPage";
 
 function App() {
     return (
@@ -26,7 +29,17 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/about" element={<AboutPage />} />
-                <Route path="/userProfile" element={<UserProfilePage />} />
+                <Route path="/userProfile" element={<UserProfilePage />}>
+                    <Route path="myInfo" element={<MyInfoPage />} />
+                    <Route
+                        path="ChangePassword"
+                        element={<ChangeUserPassword />}
+                    />
+                    <Route
+                        path="updateUserInfo"
+                        element={<UpdateUserInfoPage />}
+                    />
+                </Route>
                 <Route path="/userDashboard" element={<UserDashboardPage />} />
                 <Route path="/userFavourite" element={<UserFavouritePage />} />
                 <Route path="/register" element={<RegisterPage />} />

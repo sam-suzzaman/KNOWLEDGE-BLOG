@@ -43,3 +43,8 @@
         margin-right: 0.2rem;
     }
 }
+
+/* for use dashboard to (to make content bg transparent)*/
+.drawer-toggle ~ .drawer-side > .drawer-overlay {
+    background-color: transparent;
+}
