@@ -20,6 +20,8 @@ import SingleBlogPage from "./pages/SingleBlogPage";
 import MyInfoPage from "./pages/MyInfoPage";
 import ChangeUserPassword from "./pages/ChangeUserPassword";
 import UpdateUserInfoPage from "./pages/UpdateUserInfoPage";
+import MyPostInfoPage from "./pages/MyPostInfoPage";
+import AddPostPage from "./pages/AddPostPage";
 
 function App() {
     return (
@@ -40,7 +42,10 @@ function App() {
                         element={<UpdateUserInfoPage />}
                     />
                 </Route>
-                <Route path="/userDashboard" element={<UserDashboardPage />} />
+                <Route path="/userDashboard" element={<UserDashboardPage />}>
+                    <Route path="postInfo" element={<MyPostInfoPage />} />
+                    <Route path="addPost" element={<AddPostPage />} />
+                </Route>
                 <Route path="/userFavourite" element={<UserFavouritePage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />

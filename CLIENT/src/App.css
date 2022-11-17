@@ -48,3 +48,14 @@
 .drawer-toggle ~ .drawer-side > .drawer-overlay {
     background-color: transparent;
 }
+
+/* Profile Post Card */
+.profile_post_card > h3 {
+    border: 1px solid #fff;
+    border-radius: 30px;
+}
+
+/* my profile table */
+/* .myProfileTable tr {
+    background: rgb(224, 34, 34);
+} */
