@@ -1,4 +1,5 @@
 import "./App.css";
+import "react-quill/dist/quill.snow.css";
 import { Routes, Route } from "react-router-dom";
 
 // Components

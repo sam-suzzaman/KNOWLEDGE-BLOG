@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Multiselect from "multiselect-react-dropdown";
+import QuillForm from "../components/shared/QuillForm";
+
 const dropValue = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
 
 const AddPostPage = () => {
     const [tags, setTags] = useState([]);
+    const [blogContentQuill, setBlogContentQuill] = useState("");
     const {
         register,
         formState: { errors },
         handleSubmit,
     } = useForm();
 
+    const getQuillFormValue = (value) => {
+        setBlogContentQuill(value);
+    };
     const handleTagsRemove = (list) => {
         setTags(list);
     };
@@ -20,9 +26,10 @@ const AddPostPage = () => {
     };
 
     const handleFormSubmit = (data) => {
-        const finalPost = { ...data, tags };
+        const finalPost = { ...data, tags, blogContentQuill };
         console.log(finalPost);
     };
+
     return (
         <>
             <div className="">
@@ -31,8 +38,12 @@ const AddPostPage = () => {
                 </h2>
 
                 {/* form */}
-                <div className="">
-                    <form action="" onSubmit={handleSubmit(handleFormSubmit)}>
+                <div className="w-full mt-4 md:mt-8">
+                    <form
+                        className="w-full"
+                        action=""
+                        onSubmit={handleSubmit(handleFormSubmit)}
+                    >
                         {/* UserName Input Field */}
                         <div className="form-control">
                             <label className="label ">
@@ -158,9 +169,31 @@ const AddPostPage = () => {
                             />
                         </div>
 
-                        <button className="btn" type="submit">
-                            submit
-                        </button>
+                        {/* Blog Content */}
+                        <div className="form-control mt-4 ">
+                            <label className="label ">
+                                <span className="label-text font-semibold capitalize text-primary text-base">
+                                    Post Content{" "}
+                                    <sup className="text-red-600 font-bold text-sm">
+                                        *
+                                    </sup>
+                                </span>
+                            </label>
+                            <div className="" id="quill_form">
+                                <QuillForm
+                                    getQuillFormValue={getQuillFormValue}
+                                />
+                            </div>
+                        </div>
+                        {/* submit button */}
+                        <div className="flex justify-center md:justify-start mt-8">
+                            <button
+                                className="btn btn-md px-8 h-8 md:px-12 md:h-3 hover:text-base-100 border-secondary rounded-3xl"
+                                type="submit"
+                            >
+                                submit
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
