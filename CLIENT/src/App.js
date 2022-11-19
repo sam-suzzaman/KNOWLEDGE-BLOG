@@ -23,6 +23,7 @@ import ChangeUserPassword from "./pages/ChangeUserPassword";
 import UpdateUserInfoPage from "./pages/UpdateUserInfoPage";
 import MyPostInfoPage from "./pages/MyPostInfoPage";
 import AddPostPage from "./pages/AddPostPage";
+import UpdateBlogData from "./pages/UpdateBlogData";
 
 function App() {
     return (
@@ -54,6 +55,7 @@ function App() {
                     path="/singleBlog/:blogID"
                     element={<SingleBlogPage />}
                 />
+                <Route path="/updateBlog" element={<UpdateBlogData/>} />
                 <Route path="/commingSoon" element={<CommingSoonPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>

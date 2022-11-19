@@ -2,6 +2,8 @@ import React from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { TiDeleteOutline } from "react-icons/ti";
+import { Link } from "react-router-dom";
+import BlogDeleteModal from "./BlogDeleteModal";
 
 const TableRow = () => {
     return (
@@ -38,15 +40,25 @@ const TableRow = () => {
             <td className="text-center">12/16/2020</td>
             <td>
                 <div className="flex justify-center items-center ">
-                    <span className="badge mr-1 duration-200 hover:bg-accent hover:text-base-100 text-base py-1 cursor-pointer">
-                        <AiOutlineEye />
-                    </span>
-                    <span className="badge mr-1 hover:bg-accent hover:text-base-100 text-base cursor-pointer">
-                        <FiEdit />
-                    </span>
-                    <span className="badge hover:bg-red-600 hover:text-base-100 text-xl cursor-pointer">
+                    <Link to="/singleBlog/11">
+                        <span className="badge mr-1 duration-200 hover:bg-accent hover:text-base-100 text-base py-1 cursor-pointer">
+                            <AiOutlineEye />
+                        </span>
+                    </Link>
+
+                    <Link to="/updateBlog">
+                        <span className="badge mr-1 duration-200 hover:bg-accent hover:text-base-100 text-base py-1 cursor-pointer">
+                            <FiEdit />
+                        </span>
+                    </Link>
+                    {/* Delete Button */}
+                    <label
+                        htmlFor="BlogDeleteModal"
+                        className="badge hover:bg-red-600 hover:text-base-100 text-xl cursor-pointer"
+                    >
                         <TiDeleteOutline />
-                    </span>
+                    </label>
+                    <BlogDeleteModal />
                 </div>
             </td>
         </tr>
