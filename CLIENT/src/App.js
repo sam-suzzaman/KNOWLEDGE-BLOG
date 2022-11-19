@@ -24,6 +24,7 @@ import UpdateUserInfoPage from "./pages/UpdateUserInfoPage";
 import MyPostInfoPage from "./pages/MyPostInfoPage";
 import AddPostPage from "./pages/AddPostPage";
 import UpdateBlogData from "./pages/UpdateBlogData";
+import ManageMembersPage from "./pages/ManageMembersPage";
 
 function App() {
     return (
@@ -47,6 +48,10 @@ function App() {
                 <Route path="/userDashboard" element={<UserDashboardPage />}>
                     <Route path="postInfo" element={<MyPostInfoPage />} />
                     <Route path="addPost" element={<AddPostPage />} />
+                    <Route
+                        path="manageMembers"
+                        element={<ManageMembersPage />}
+                    />
                 </Route>
                 <Route path="/userFavourite" element={<UserFavouritePage />} />
                 <Route path="/register" element={<RegisterPage />} />
@@ -55,7 +60,7 @@ function App() {
                     path="/singleBlog/:blogID"
                     element={<SingleBlogPage />}
                 />
-                <Route path="/updateBlog" element={<UpdateBlogData/>} />
+                <Route path="/updateBlog" element={<UpdateBlogData />} />
                 <Route path="/commingSoon" element={<CommingSoonPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
