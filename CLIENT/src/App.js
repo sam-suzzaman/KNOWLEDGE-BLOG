@@ -35,7 +35,7 @@ function App() {
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/userProfile" element={<UserProfilePage />}>
-                    <Route path="myInfo" element={<MyInfoPage />} />
+                    <Route path="" element={<MyInfoPage />} />
                     <Route
                         path="ChangePassword"
                         element={<ChangeUserPassword />}
@@ -46,7 +46,7 @@ function App() {
                     />
                 </Route>
                 <Route path="/userDashboard" element={<UserDashboardPage />}>
-                    <Route path="postInfo" element={<MyPostInfoPage />} />
+                    <Route path="" element={<MyPostInfoPage />} />
                     <Route path="addPost" element={<AddPostPage />} />
                     <Route
                         path="manageMembers"

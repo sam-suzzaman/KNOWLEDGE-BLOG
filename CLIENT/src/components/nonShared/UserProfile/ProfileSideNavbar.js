@@ -8,7 +8,7 @@ const ProfileSideNavbar = () => {
         <ul className="menu  text-primary">
             <li className="flex">
                 <NavLink
-                    to="/userProfile/myInfo"
+                    to="/userProfile"
                     className="font-semibold text-lg sm:text-xl capitalize rounded-sm mb-4"
                 >
                     <CgProfile />

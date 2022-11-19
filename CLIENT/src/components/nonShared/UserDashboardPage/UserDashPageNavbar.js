@@ -8,7 +8,7 @@ const UserDashPageNavbar = () => {
         <ul className="menu  text-primary">
             <li className="flex">
                 <NavLink
-                    to="/userDashboard/postInfo"
+                    to="/userDashboard"
                     className="font-semibold text-lg sm:text-xl capitalize rounded-sm mb-4"
                 >
                     <CgProfile />
