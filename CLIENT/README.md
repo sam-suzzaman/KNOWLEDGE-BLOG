@@ -8,3 +8,4 @@
 -   React Router Dom
 -   React Icons
 -   React Hook Form
+-   React-Multiselect-Dropdown

@@ -44,7 +44,7 @@ const TableRow = () => {
                     <span className="badge mr-1 hover:bg-accent hover:text-base-100 text-base cursor-pointer">
                         <FiEdit />
                     </span>
-                    <span className="badge hover:bg-accent hover:text-base-100 text-base cursor-pointer">
+                    <span className="badge hover:bg-red-600 hover:text-base-100 text-xl cursor-pointer">
                         <TiDeleteOutline />
                     </span>
                 </div>
