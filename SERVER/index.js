@@ -1,20 +1,21 @@
 const express = require("express");
 const app = express();
-// const port = process.env.PORT || 5000;
-const port = 2000;
+const port = process.env.PORT || 2000;
 
-// app.use(express.json()); // json parsing
-// require("dotenv").config(); // dotenv
+app.use(express.json()); // json parsing
+require("dotenv").config(); // dotenv
 
-// Cors
-// const cors = require("cors");
-// app.use(cors());
+//Cors
+const cors = require("cors");
+app.use(cors());
+
+// Database Connection
+const DBConnectionHandler = require("./Utilites/DBConnectionHandler");
+DBConnectionHandler();
 
 // Routers handlers/middlewares import
 
 // Utilites import
-
-// Database Connection
 
 // main routes
 
