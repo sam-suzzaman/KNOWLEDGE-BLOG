@@ -8,6 +8,7 @@
 -   mongoose
 -   jsonwebtoken
 -   nodemon
+-   http-errors
 
 #### Routes:
 

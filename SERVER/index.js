@@ -9,23 +9,39 @@ require("dotenv").config(); // dotenv
 const cors = require("cors");
 app.use(cors());
 
-// Database Connection
+// All Imports:
 const DBConnectionHandler = require("./Utilites/DBConnectionHandler");
+const BlogRoute = require("./Routes/BlogRoute");
+const PeopleRoute = require("./Routes/PeopleRoute");
+const ErrorHandingMiddleware = require("./middlewares/ErrorHandingMiddleware");
+const createError = require("http-errors");
+
+// ==============================================
+
+// Database Connection
 DBConnectionHandler();
 
-// Routers handlers/middlewares import
-
-// Utilites import
-
 // main routes
+app.use("/api/v1/blog", BlogRoute); // Blog Related Route
+app.use("/api/v1/people", PeopleRoute); // User Related Route
 
 // default route
 app.get("/test", (req, res) => {
     res.send("Testing route");
 });
+
 app.get("/", (req, res) => {
     res.send("Server is Running");
 });
+
+//  404 Error Route and Handler==========================================
+const NotFoundHandler = (req, res, next) => {
+    next(createError(404, "Your requested content was not found!"));
+};
+
+app.use(NotFoundHandler); // Not Found Route Handler
+app.use(ErrorHandingMiddleware.CommonErrorHandler); // Global Error Handler
+// =====================================================================
 
 app.listen(port, () => {
     console.log(`Listening at port: http://localhost:${port}/`);
