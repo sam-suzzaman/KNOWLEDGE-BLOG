@@ -13,3 +13,5 @@
 #### Routes:
 
 -   Base URL: http://localhost:2000/
+-   Add New User: http://localhost:2000/api/v1/people/add-people
+-   Get All Users: http://localhost:2000/api/v1/people/get-people
