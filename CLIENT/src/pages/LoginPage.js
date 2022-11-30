@@ -7,6 +7,8 @@ import {
 } from "react-icons/ai";
 import { BsFacebook } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
     const [showPassowrd, setShowPassword] = useState(false);
@@ -17,7 +19,19 @@ const LoginPage = () => {
         handleSubmit,
     } = useForm();
 
-    const handleFormSubmit = (data) => console.log(data);
+    const handleFormSubmit = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2000/api/v1/people/login-people",
+                data
+            );
+            console.log(response);
+            response.data.success && toast.success("Login Successfully");
+        } catch (error) {
+            console.log(error);
+            !error.response.success && toast.error("Login Failed");
+        }
+    };
 
     return (
         <>

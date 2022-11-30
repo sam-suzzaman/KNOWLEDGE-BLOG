@@ -16,3 +16,5 @@
 -   Base URL: http://localhost:2000/
 -   Add New User: http://localhost:2000/api/v1/people/add-people
 -   Get All Users: http://localhost:2000/api/v1/people/get-people
+-   Update User Info: http://localhost:2000/api/v1/people/update-people
+-   To Login: http://localhost:2000/api/v1/people/login-people

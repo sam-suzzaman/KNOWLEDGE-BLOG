@@ -2,6 +2,7 @@ const createError = require("http-errors");
 const PeopleModel = require("../Model/PeopleModel");
 const { unlink } = require("fs");
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 // GET Controllers ====================================
 exports.getAllPeople = async (req, res, next) => {
@@ -36,6 +37,35 @@ exports.addPeopleHandler = async (req, res, next) => {
             } else {
                 next(createError(500, "Enter valid information"));
             }
+        }
+    } catch (error) {
+        next(createError(500, error.message));
+    }
+};
+
+exports.loginPeopleHandler = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        if (email && password) {
+            const isPeopleExist = await PeopleModel.findOne({ email });
+            if (isPeopleExist) {
+                const isPasswordMatched = await bcrypt.compare(
+                    password,
+                    isPeopleExist.password
+                );
+                if (isPasswordMatched) {
+                    res.status(200).send({
+                        success: true,
+                        message: "Login Successfully",
+                    });
+                } else {
+                    next(createError(500, "Email or Password not matched"));
+                }
+            } else {
+                next(createError(500, "User not found!!!"));
+            }
+        } else {
+            next(createError(500, "All fields are required"));
         }
     } catch (error) {
         next(createError(500, error.message));

@@ -11,5 +11,6 @@ PeopleRoute.put(
     AvatarUploadMiddleware,
     PeopleController.updatePeopleHandler
 );
+PeopleRoute.post("/login-people", PeopleController.loginPeopleHandler);
 
 module.exports = PeopleRoute;
