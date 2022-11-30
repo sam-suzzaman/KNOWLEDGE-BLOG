@@ -18,6 +18,7 @@ PeopleRoute.get(
 
 PeopleRoute.put(
     "/update-people",
+    userAuthenticatioMiddleware,
     AvatarUploadMiddleware,
     PeopleController.updatePeopleHandler
 );

@@ -54,9 +54,14 @@ const UpdateUserInfoPage = () => {
 
         // post
         try {
+            const token = localStorage.getItem("access-token");
+            const config = {
+                headers: { authorization: `Bearer ${token}` },
+            };
             const response = await axios.put(
                 "http://localhost:2000/api/v1/people/update-people",
-                formData
+                formData,
+                config
             );
             if (response.data.success) {
                 toast.success("Profile Updated");
@@ -64,7 +69,6 @@ const UpdateUserInfoPage = () => {
         } catch (err) {
             !err.response.data.success &&
                 toast.error("Sorry! Profile not updated");
-            console.log(err.response.data);
         }
     };
     return (
