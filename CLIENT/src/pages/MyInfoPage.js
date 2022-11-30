@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { BsTwitter, BsGithub } from "react-icons/bs";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const MyInfoPage = () => {
+    const getMeHandler = async () => {
+        try {
+            const token = localStorage.getItem("access-token");
+            const config = {
+                headers: { authorization: `Bearerr ${token}` },
+            };
+            const response = await axios.get(
+                "http://localhost:2000/api/v1/people/get-me",
+                config
+            );
+            if (response?.data) {
+                // set data on state
+                console.log(response.data);
+            }
+        } catch (error) {
+            console.log(error.response.data);
+        }
+    };
+    useEffect(() => {
+        getMeHandler();
+    }, []);
     return (
         <>
             <div className="border-neutral border-2 rounded-md py-4 px-4">

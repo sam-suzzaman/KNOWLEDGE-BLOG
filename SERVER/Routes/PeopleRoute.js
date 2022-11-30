@@ -29,4 +29,10 @@ PeopleRoute.put(
     PeopleController.changePasswordHandler
 );
 
+PeopleRoute.get(
+    "/get-me",
+    userAuthenticatioMiddleware,
+    PeopleController.getMeHandler
+);
+
 module.exports = PeopleRoute;

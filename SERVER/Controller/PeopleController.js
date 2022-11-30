@@ -19,6 +19,19 @@ exports.getAllPeople = async (req, res, next) => {
     }
 };
 
+exports.getMeHandler = async (req, res, next) => {
+    const result = req.user;
+    try {
+        res.status(200).json({
+            status: true,
+            message: "Data get Successfully",
+            result,
+        });
+    } catch (error) {
+        next(createError(500, error.message));
+    }
+};
+
 //  POST Controllers ==================================
 exports.addPeopleHandler = async (req, res, next) => {
     try {
