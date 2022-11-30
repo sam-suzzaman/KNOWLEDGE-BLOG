@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
     const [showPassowrd, setShowPassword] = useState(false);
@@ -10,9 +12,46 @@ const RegisterPage = () => {
         register,
         formState: { errors },
         handleSubmit,
+        reset,
     } = useForm();
 
-    const handleFormSubmit = (data) => console.log(data);
+    const handleFormSubmit = async (data) => {
+        const { username, email, password, confirmPassword } = data;
+        if (password === confirmPassword) {
+            const newObject = { name: username, email, password };
+
+            // post
+            try {
+                const response = await axios.post(
+                    "http://localhost:2000/api/v1/people/add-people",
+                    newObject
+                );
+                if (response.data.success) {
+                    toast.success(response.data.message, {
+                        position: "bottom-left",
+                        autoClose: 4000,
+                    });
+                }
+                reset();
+                console.log(response.data);
+            } catch (error) {
+                if (!error.response.data.success) {
+                    toast.error(error.response.data.message, {
+                        position: "bottom-left",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+            }
+        } else {
+            console.log("password not match");
+        }
+    };
 
     return (
         <>
@@ -240,7 +279,7 @@ const RegisterPage = () => {
                                 </button>
                             </div>
                         </form>
-                        
+
                         <p className="text-center text-sm text-primary mt-3">
                             Already have an account?{" "}
                             <Link

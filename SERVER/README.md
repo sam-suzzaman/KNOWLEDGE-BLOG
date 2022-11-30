@@ -9,6 +9,7 @@
 -   jsonwebtoken
 -   nodemon
 -   http-errors
+-   Multer
 
 #### Routes:
 

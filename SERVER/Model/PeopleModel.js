@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const PeopleSchema = mongoose.Schema(
+const PeopleSchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -35,9 +35,16 @@ const PeopleSchema = mongoose.Schema(
             type: String,
             trim: true,
         },
-        socialUrl: {
-            type: [{}],
-        },
+        // socialURL: [{ path: String, name: String }],
+
+        // socialURL: [
+        //     {
+        //         URLname: { type: String },
+        //         URLpath: { type: String },
+        //     },
+        // ],
+
+        // _id: mongoose.Schema.Types.ObjectId,
         role: {
             type: String,
             enum: ["ADMIN", "AUTHOR", "USER"],
@@ -60,3 +67,19 @@ PeopleSchema.pre("save", async function (next) {
 const PeopleModel = mongoose.model("PeopleCollection", PeopleSchema);
 
 module.exports = PeopleModel;
+
+// ============================================
+// const obj = [
+//     {
+//         URLname: "facebook",
+//         URLpath: "http://localhost:2000",
+//     },
+//     {
+//         URLname: "twitter",
+//         URLpath: "http://localhost:2000",
+//     },
+//     {
+//         URLname: "github",
+//         URLpath: "http://localhost:2000",
+//     },
+// ];

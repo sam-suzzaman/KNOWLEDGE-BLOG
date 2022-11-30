@@ -9,3 +9,5 @@
 -   React Icons
 -   React Hook Form
 -   React-Multiselect-Dropdown
+-   Axios
+-   React-Toastify

@@ -2,6 +2,10 @@ import "./App.css";
 import "react-quill/dist/quill.snow.css";
 import { Routes, Route } from "react-router-dom";
 
+// React-Toastify
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // Components
 import Navbar from "./components/shared/Navbar";
 import Footer from "./components/shared/Footer";
@@ -64,6 +68,8 @@ function App() {
                 <Route path="/commingSoon" element={<CommingSoonPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
+            {/* <MyToast /> */}
+            <ToastContainer limit={1} />
             <Footer />
         </>
     );
