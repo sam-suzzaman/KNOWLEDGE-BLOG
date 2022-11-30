@@ -91,6 +91,18 @@ exports.updatePeopleHandler = async (req, res, next) => {
             next(createError(500, "User not available"));
         }
     } catch (error) {
+        if (req.files.length > 0) {
+            const { filename } = req.files[0];
+            unlink(
+                path.join(__dirname, `/../public/uploads/Avatars/${filename}`),
+                (err) => {
+                    if (err) {
+                        console.log(`error from remove handler:${err.message}`);
+                    }
+                }
+            );
+        }
+
         next(createError(500, error.message));
     }
 };

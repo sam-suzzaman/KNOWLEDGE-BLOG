@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const UpdateUserInfoPage = () => {
     const {
@@ -9,7 +11,62 @@ const UpdateUserInfoPage = () => {
         handleSubmit,
     } = useForm();
 
-    const handleFormSubmit = (data) => console.log(data);
+    const handleFormSubmit = async (data) => {
+        const email = "demo@gmail.com";
+        const {
+            avatar,
+            username,
+            description,
+            address,
+            contactNumber,
+            githubURL,
+            twitterURL,
+            fbURL,
+        } = data;
+
+        const mergedURL = [
+            {
+                URLname: "facebook",
+                URLpath: fbURL || "not available",
+            },
+            {
+                URLname: "twitter",
+                URLpath: twitterURL || "not available",
+            },
+            {
+                URLname: "github",
+                URLpath: githubURL || "not available",
+            },
+        ];
+
+        // Creating Form Data
+        const formData = new FormData();
+        formData.append("name", username);
+        formData.append("email", email);
+        formData.append("description", description);
+        formData.append("address", address);
+        formData.append("contactNumber", contactNumber);
+        formData.append("socialURL", mergedURL);
+        if (avatar.length) {
+            const avatarFile = avatar[0];
+            formData.append("avatar", avatarFile, avatarFile.filename);
+        }
+
+        // post
+        try {
+            const response = await axios.put(
+                "http://localhost:2000/api/v1/people/update-people",
+                formData
+            );
+            if (response.data.success) {
+                toast.success("Profile Updated");
+            }
+        } catch (err) {
+            !err.response.data.success &&
+                toast.error("Sorry! Profile not updated");
+            console.log(err.response.data);
+        }
+    };
     return (
         <>
             <div className="border-2 border-neutral rounded-md p-4">
@@ -38,6 +95,7 @@ const UpdateUserInfoPage = () => {
                             <input
                                 type="file"
                                 className="file-input file-input-bordered file-input-md w-full"
+                                {...register("avatar")}
                             />
                             {/* <label className="label">
                                 <span className="label-text-alt">
@@ -153,7 +211,7 @@ const UpdateUserInfoPage = () => {
                                 </span>
                             )}
                         </div>
-                        {/* Name Single Input Field */}
+                        {/* Contact Number Single Input Field */}
                         <div className="form-control mt-4">
                             <label className="label ">
                                 <span className="label-text font-semibold capitalize text-primary text-base">
@@ -168,7 +226,7 @@ const UpdateUserInfoPage = () => {
                                     required: true,
                                     minLength: 11,
                                     maxLength: 14,
-                                    pattern: /(\+88)?-01[0-9]\d{8}/i,
+                                    // pattern: /(\+88)?-01[0-9]\d{8}/i,
                                 })}
                             />
 
@@ -179,19 +237,19 @@ const UpdateUserInfoPage = () => {
                             )}
                             {errors.contactNumber?.type === "minLength" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
-                                    contactNumber must be 3 character
+                                    contactNumber must be 11 character
                                 </span>
                             )}
                             {errors.contactNumber?.type === "maxLength" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
-                                    contactNumber must be in 20 character
+                                    contactNumber must be in 14 character
                                 </span>
                             )}
-                            {errors.contactNumber?.type === "pattern" && (
+                            {/* {errors.contactNumber?.type === "pattern" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
                                     enter a valid Contact Number
                                 </span>
-                            )}
+                            )} */}
                         </div>
                         {/* Social Link Input Field */}
                         <div className="form-control mt-4">

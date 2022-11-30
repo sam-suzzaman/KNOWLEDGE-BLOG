@@ -27,25 +27,13 @@ const RegisterPage = () => {
                     newObject
                 );
                 if (response.data.success) {
-                    toast.success(response.data.message, {
-                        position: "bottom-left",
-                        autoClose: 4000,
-                    });
+                    toast.success(response.data.message);
                 }
                 reset();
                 console.log(response.data);
             } catch (error) {
                 if (!error.response.data.success) {
-                    toast.error(error.response.data.message, {
-                        position: "bottom-left",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    toast.error(error.response.data.message);
                 }
             }
         } else {

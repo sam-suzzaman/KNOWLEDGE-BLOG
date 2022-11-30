@@ -21,8 +21,6 @@ const PeopleSchema = new mongoose.Schema(
         description: {
             type: String,
             trim: true,
-            minLength: [20, "Description is too short"],
-            maxLength: [200, "Description is too long"],
         },
         avatar: {
             type: String,
@@ -35,8 +33,8 @@ const PeopleSchema = new mongoose.Schema(
             type: String,
             trim: true,
         },
-        // socialURL: [{ path: String, name: String }],
 
+        socialURL: [],
         // socialURL: [
         //     {
         //         URLname: { type: String },
@@ -67,19 +65,3 @@ PeopleSchema.pre("save", async function (next) {
 const PeopleModel = mongoose.model("PeopleCollection", PeopleSchema);
 
 module.exports = PeopleModel;
-
-// ============================================
-// const obj = [
-//     {
-//         URLname: "facebook",
-//         URLpath: "http://localhost:2000",
-//     },
-//     {
-//         URLname: "twitter",
-//         URLpath: "http://localhost:2000",
-//     },
-//     {
-//         URLname: "github",
-//         URLpath: "http://localhost:2000",
-//     },
-// ];

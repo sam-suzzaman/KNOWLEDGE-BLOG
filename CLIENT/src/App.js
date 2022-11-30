@@ -68,8 +68,19 @@ function App() {
                 <Route path="/commingSoon" element={<CommingSoonPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
-            {/* <MyToast /> */}
-            <ToastContainer limit={1} />
+            <ToastContainer
+                limit={1}
+                position="bottom-left"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <Footer />
         </>
     );
