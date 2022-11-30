@@ -26,7 +26,8 @@ const LoginPage = () => {
                 "http://localhost:2000/api/v1/people/login-people",
                 data
             );
-            console.log(response);
+            const accessToken = response.data.TOKEN;
+            localStorage.setItem("access-token", accessToken);
             response.data.success && toast.success("Login Successfully");
             reset();
         } catch (error) {

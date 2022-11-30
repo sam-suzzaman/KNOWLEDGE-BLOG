@@ -29,6 +29,8 @@ const RegisterPage = () => {
                 if (response.data.success) {
                     toast.success(response.data.message);
                 }
+                const accessToken = response.data.TOKEN;
+                localStorage.setItem("access-token", accessToken);
                 reset();
                 console.log(response.data);
             } catch (error) {
