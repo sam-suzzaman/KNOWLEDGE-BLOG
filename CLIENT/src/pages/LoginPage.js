@@ -17,6 +17,7 @@ const LoginPage = () => {
         register,
         formState: { errors },
         handleSubmit,
+        reset,
     } = useForm();
 
     const handleFormSubmit = async (data) => {
@@ -27,6 +28,7 @@ const LoginPage = () => {
             );
             console.log(response);
             response.data.success && toast.success("Login Successfully");
+            reset();
         } catch (error) {
             console.log(error);
             !error.response.success && toast.error("Login Failed");

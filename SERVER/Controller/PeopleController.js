@@ -3,6 +3,7 @@ const PeopleModel = require("../Model/PeopleModel");
 const { unlink } = require("fs");
 const path = require("path");
 const bcrypt = require("bcrypt");
+const JWTGenerator = require("../Utilites/JWT_Generator");
 
 // GET Controllers ====================================
 exports.getAllPeople = async (req, res, next) => {
@@ -30,9 +31,12 @@ exports.addPeopleHandler = async (req, res, next) => {
             if (name && email && password) {
                 const newPeople = new PeopleModel(req.body);
                 const result = await newPeople.save();
+                const tokenObj = { ID: result._id, email: result.email };
+                const TOKEN = JWTGenerator(tokenObj, "1d");
                 res.status(200).send({
                     success: true,
                     message: "User Added Successfully",
+                    TOKEN,
                 });
             } else {
                 next(createError(500, "Enter valid information"));
@@ -54,9 +58,15 @@ exports.loginPeopleHandler = async (req, res, next) => {
                     isPeopleExist.password
                 );
                 if (isPasswordMatched) {
+                    const tokenObj = {
+                        ID: isPeopleExist._id,
+                        email: isPeopleExist.email,
+                    };
+                    const TOKEN = JWTGenerator(tokenObj, "1d");
                     res.status(200).send({
                         success: true,
                         message: "Login Successfully",
+                        TOKEN,
                     });
                 } else {
                     next(createError(500, "Email or Password not matched"));

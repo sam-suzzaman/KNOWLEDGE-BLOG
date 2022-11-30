@@ -62,6 +62,7 @@ PeopleSchema.pre("save", async function (next) {
     this.password = hashedPassword;
     next();
 });
+
 const PeopleModel = mongoose.model("PeopleCollection", PeopleSchema);
 
 module.exports = PeopleModel;
