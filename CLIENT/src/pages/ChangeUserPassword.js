@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const ChangeUserPassword = () => {
     const [showPassowrd, setShowPassword] = useState(false);
@@ -11,7 +13,32 @@ const ChangeUserPassword = () => {
         handleSubmit,
     } = useForm();
 
-    const handleFormSubmit = (data) => console.log(data);
+    const handleFormSubmit = async (data) => {
+        const { newPassword, newConfirmPassword } = data;
+        if (newPassword === newConfirmPassword) {
+            try {
+                const token = localStorage.getItem("access-token");
+                const config = {
+                    headers: { authorization: `Bearer ${token}` },
+                };
+                const response = await axios.put(
+                    "http://localhost:2000/api/v1/people/change-password",
+                    { newPassword },
+                    config
+                );
+                if (response.data.success) {
+                    toast.success(" Password Changed Successfully");
+                }
+            } catch (err) {
+                console.log(err);
+                !err.response.data.success &&
+                    toast.error("Sorry!Password not Changed");
+            }
+        } else {
+            console.log("Confirm Password does not match");
+            toast.info("Confirm Password not match!!!");
+        }
+    };
 
     return (
         <>
@@ -21,18 +48,6 @@ const ChangeUserPassword = () => {
                 </h3>
                 <div className=" mt-16 mb-8 w-full max-w-md mx-auto shadow-md p-4 border-neutral border-2">
                     <form action="" onSubmit={handleSubmit(handleFormSubmit)}>
-                        {/* previous Single Input Field */}
-                        <div className="form-control relative">
-                            <label className="label ">
-                                <span className="label-text font-normal capitalize text-base-200 text-base">
-                                    previous password{" "}
-                                </span>
-                            </label>
-                            <input
-                                type="password"
-                                className="input input-bordered "
-                            />
-                        </div>
                         {/* New Password Single Input Field */}
                         <div className="form-control relative mt-4">
                             <label className="label ">

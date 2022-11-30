@@ -90,7 +90,7 @@ exports.updatePeopleHandler = async (req, res, next) => {
             email: req.body.email,
         });
         if (isPeopleExist) {
-            if (req.files && req.files.length > 0) {
+            if (req.files && req.files?.length > 0) {
                 const mergedPeople = {
                     ...req.body,
                     avatar: req.files[0].filename,
@@ -112,7 +112,7 @@ exports.updatePeopleHandler = async (req, res, next) => {
                 message: "User Updated Successfully",
             });
         } else {
-            if (req.files.length > 0) {
+            if (req.files?.length > 0) {
                 const { filename } = req.files[0];
                 unlink(
                     path.join(
@@ -131,7 +131,7 @@ exports.updatePeopleHandler = async (req, res, next) => {
             next(createError(500, "User not available"));
         }
     } catch (error) {
-        if (req.files.length > 0) {
+        if (req.files?.length > 0) {
             const { filename } = req.files[0];
             unlink(
                 path.join(__dirname, `/../public/uploads/Avatars/${filename}`),
@@ -144,5 +144,29 @@ exports.updatePeopleHandler = async (req, res, next) => {
         }
 
         next(createError(500, error.message));
+    }
+};
+
+exports.changePasswordHandler = async (req, res, next) => {
+    const { newPassword } = req.body;
+    if (newPassword) {
+        try {
+            const salt = await bcrypt.genSalt(10);
+            const newHashedPassword = await bcrypt.hash(newPassword, salt);
+            const { _id, email } = req.user;
+            const result = await PeopleModel.findOneAndUpdate(
+                { _id, email },
+                { password: newHashedPassword },
+                { new: true }
+            );
+            res.status(200).send({
+                success: true,
+                message: "Password Changed Successfully",
+            });
+        } catch (error) {
+            next(createError(500, error.message));
+        }
+    } else {
+        next(createError(500, "Password was not found!!!"));
     }
 };

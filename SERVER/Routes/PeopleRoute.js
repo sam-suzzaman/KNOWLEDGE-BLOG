@@ -23,4 +23,10 @@ PeopleRoute.put(
     PeopleController.updatePeopleHandler
 );
 
+PeopleRoute.put(
+    "/change-password",
+    userAuthenticatioMiddleware,
+    PeopleController.changePasswordHandler
+);
+
 module.exports = PeopleRoute;
