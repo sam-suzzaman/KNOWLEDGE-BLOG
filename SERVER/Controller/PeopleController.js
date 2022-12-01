@@ -99,23 +99,26 @@ exports.loginPeopleHandler = async (req, res, next) => {
 exports.updatePeopleHandler = async (req, res, next) => {
     let result;
     try {
-        const isPeopleExist = await PeopleModel.findOne({
-            email: req.body.email,
-        });
-        if (isPeopleExist) {
+        // const isPeopleExist = await PeopleModel.findOne({
+        //     email: req.body.email,
+        // });
+
+        if (req.user) {
             if (req.files && req.files?.length > 0) {
                 const mergedPeople = {
                     ...req.body,
                     avatar: req.files[0].filename,
                 };
                 result = await PeopleModel.updateOne(
-                    { email: req.body.email },
+                    // { email: req.body.email },
+                    req.user,
                     { $set: mergedPeople },
                     { runValidators: true }
                 );
             } else {
                 result = await PeopleModel.updateOne(
-                    { email: req.body.email },
+                    // { email: req.body.email },
+                    req.user,
                     { $set: req.body },
                     { runValidators: true }
                 );

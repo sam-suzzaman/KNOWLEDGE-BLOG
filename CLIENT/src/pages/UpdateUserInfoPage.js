@@ -1,18 +1,26 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const UpdateUserInfoPage = () => {
+    const [avatarPreview, setAvatarPerview] = useState("");
     const {
         register,
         formState: { errors },
         handleSubmit,
+        reset,
     } = useForm();
 
+    // handle image preview
+    const handleImagePreview = (e) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            reader.readyState === 2 && setAvatarPerview(reader.result);
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
     const handleFormSubmit = async (data) => {
-        const email = "demo@gmail.com";
         const {
             avatar,
             username,
@@ -41,11 +49,10 @@ const UpdateUserInfoPage = () => {
 
         // Creating Form Data
         const formData = new FormData();
-        formData.append("name", username);
-        formData.append("email", email);
-        formData.append("description", description);
-        formData.append("address", address);
-        formData.append("contactNumber", contactNumber);
+        username && formData.append("name", username);
+        description && formData.append("description", description);
+        address && formData.append("address", address);
+        contactNumber && formData.append("contactNumber", contactNumber);
         formData.append("socialURL", mergedURL);
         if (avatar.length) {
             const avatarFile = avatar[0];
@@ -61,11 +68,23 @@ const UpdateUserInfoPage = () => {
             const response = await axios.put(
                 "http://localhost:2000/api/v1/people/update-people",
                 formData,
-                config
+                config,
+                {
+                    onUploadProgress: (progressEvent) => {
+                        console.log(
+                            `Upload Progress: ${
+                                Math.round(
+                                    progressEvent.loaded / progressEvent.total
+                                ) * 100
+                            }%`
+                        );
+                    },
+                }
             );
             if (response.data.success) {
                 toast.success("Profile Updated");
             }
+            reset();
         } catch (err) {
             !err.response.data.success &&
                 toast.error("Sorry! Profile not updated");
@@ -81,15 +100,14 @@ const UpdateUserInfoPage = () => {
                     {/* Image Preview */}
                     <div className=" mb-8 flex justify-center">
                         <img
-                            className="mask mask-square"
-                            src="https://placeimg.com/160/160/arch"
-                            alt="avater"
+                            className="mask mask-square w-full max-w-[200px]"
+                            src={avatarPreview}
+                            alt="avatar"
                         />
                     </div>
                     {/* Information form */}
                     <form action="" onSubmit={handleSubmit(handleFormSubmit)}>
                         {/* Avater Image Input */}
-
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-semibold capitalize text-primary text-base">
@@ -100,6 +118,7 @@ const UpdateUserInfoPage = () => {
                                 type="file"
                                 className="file-input file-input-bordered file-input-md w-full"
                                 {...register("avatar")}
+                                onChange={handleImagePreview}
                             />
                             {/* <label className="label">
                                 <span className="label-text-alt">
@@ -119,18 +138,12 @@ const UpdateUserInfoPage = () => {
                                 placeholder="Type here"
                                 className="input input-bordered"
                                 {...register("username", {
-                                    required: true,
                                     minLength: 3,
                                     maxLength: 20,
                                     pattern: /^[A-Za-z]+$/i,
                                 })}
                             />
 
-                            {errors.username?.type === "required" && (
-                                <span className="label-text-alt text-red-600 font-medium ">
-                                    username is required
-                                </span>
-                            )}
                             {errors.username?.type === "minLength" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
                                     username must be 3 character
@@ -158,17 +171,10 @@ const UpdateUserInfoPage = () => {
                                 className="textarea textarea-bordered"
                                 placeholder="Write here..."
                                 {...register("description", {
-                                    required: true,
-                                    minLength: 80,
-                                    maxLength: 300,
+                                    minLength: 20,
+                                    maxLength: 200,
                                 })}
                             ></textarea>
-
-                            {errors.description?.type === "required" && (
-                                <span className="label-text-alt text-red-600 font-medium ">
-                                    a description is required
-                                </span>
-                            )}
                             {errors.description?.type === "minLength" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
                                     a description contains at least 80
@@ -193,17 +199,11 @@ const UpdateUserInfoPage = () => {
                                 placeholder="Type here"
                                 className="input input-bordered"
                                 {...register("address", {
-                                    required: true,
                                     minLength: 3,
                                     maxLength: 100,
                                 })}
                             />
 
-                            {errors.address?.type === "required" && (
-                                <span className="label-text-alt text-red-600 font-medium ">
-                                    address is required
-                                </span>
-                            )}
                             {errors.address?.type === "minLength" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
                                     address must be at least 3 character
@@ -227,18 +227,12 @@ const UpdateUserInfoPage = () => {
                                 placeholder="Type here"
                                 className="input input-bordered"
                                 {...register("contactNumber", {
-                                    required: true,
                                     minLength: 11,
                                     maxLength: 14,
                                     // pattern: /(\+88)?-01[0-9]\d{8}/i,
                                 })}
                             />
 
-                            {errors.contactNumber?.type === "required" && (
-                                <span className="label-text-alt text-red-600 font-medium ">
-                                    contactNumber is required
-                                </span>
-                            )}
                             {errors.contactNumber?.type === "minLength" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
                                     contactNumber must be 11 character
@@ -267,16 +261,9 @@ const UpdateUserInfoPage = () => {
                                 placeholder="Type here"
                                 className="input input-bordered"
                                 {...register("fbURL", {
-                                    // required: true,
                                     minLength: 10,
                                 })}
                             />
-
-                            {/* {errors.fbURL?.type === "required" && (
-                                <span className="label-text-alt text-red-600 font-medium ">
-                                    facebook url is required
-                                </span>
-                            )} */}
                             {errors.fbURL?.type === "minLength" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
                                     fbURL must be more than 10 character
@@ -295,16 +282,10 @@ const UpdateUserInfoPage = () => {
                                 placeholder="Type here"
                                 className="input input-bordered"
                                 {...register("twitterURL", {
-                                    // required: true,
                                     minLength: 10,
                                 })}
                             />
 
-                            {/* {errors.twitterURL?.type === "required" && (
-                                <span className="label-text-alt text-red-600 font-medium ">
-                                    twitter url is required
-                                </span>
-                            )} */}
                             {errors.twitterURL?.type === "minLength" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
                                     twitter url must be more than 10 character
@@ -323,16 +304,10 @@ const UpdateUserInfoPage = () => {
                                 placeholder="Type here"
                                 className="input input-bordered"
                                 {...register("githubURL", {
-                                    // required: true,
                                     minLength: 10,
                                 })}
                             />
 
-                            {/* {errors.githubURL?.type === "required" && (
-                                <span className="label-text-alt text-red-600 font-medium ">
-                                    github url is required
-                                </span>
-                            )} */}
                             {errors.githubURL?.type === "minLength" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
                                     github url must be more than 10 character
@@ -346,7 +321,7 @@ const UpdateUserInfoPage = () => {
                                 type="submit"
                                 className="btn btn-xs sm:btn-sm md:px-10  bg-accent text-base-100 border-accent mt-4"
                             >
-                                create account
+                                update
                             </button>
                         </div>
                     </form>
