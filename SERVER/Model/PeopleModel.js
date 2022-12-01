@@ -8,6 +8,11 @@ const PeopleSchema = new mongoose.Schema(
             required: [true, "Username is required"],
             trim: true,
         },
+        subtitle: {
+            type: String,
+            trim: true,
+            default: "Not Available!!!",
+        },
         email: {
             type: String,
             required: [true, "Email is required"],

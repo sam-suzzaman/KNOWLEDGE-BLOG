@@ -11,7 +11,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className="bg-accent px-4 main_navbar">
+        <div className="bg-accent px-4 main_navbar sticky top-0 z-50">
             <div className="md:navbar w-full max-w-screen-xl mx-auto">
                 {/* start part */}
                 <div className="md:navbar-start flex justify-between items-center w-100">

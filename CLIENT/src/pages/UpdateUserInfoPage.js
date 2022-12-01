@@ -24,6 +24,7 @@ const UpdateUserInfoPage = () => {
         const {
             avatar,
             username,
+            subtitle,
             description,
             address,
             contactNumber,
@@ -31,7 +32,7 @@ const UpdateUserInfoPage = () => {
             twitterURL,
             fbURL,
         } = data;
-
+        console.log(subtitle);
         const mergedURL = [
             {
                 URLname: "facebook",
@@ -50,6 +51,7 @@ const UpdateUserInfoPage = () => {
         // Creating Form Data
         const formData = new FormData();
         username && formData.append("name", username);
+        subtitle && formData.append("subtitle", subtitle);
         description && formData.append("description", description);
         address && formData.append("address", address);
         contactNumber && formData.append("contactNumber", contactNumber);
@@ -157,6 +159,32 @@ const UpdateUserInfoPage = () => {
                             {errors.username?.type === "pattern" && (
                                 <span className="label-text-alt text-red-600 font-medium ">
                                     username only contains letter
+                                </span>
+                            )}
+                        </div>
+                        {/* Subtitle Single Input Field */}
+                        <div className="form-control mt-4">
+                            <label className="label ">
+                                <span className="label-text font-semibold capitalize text-primary text-base">
+                                    Subtitle
+                                </span>
+                            </label>
+                            <input
+                                className="textarea textarea-bordered"
+                                placeholder="Type here..."
+                                {...register("subtitle", {
+                                    minLength: 5,
+                                    maxLength: 50,
+                                })}
+                            />
+                            {errors.subtitle?.type === "minLength" && (
+                                <span className="label-text-alt text-red-600 font-medium ">
+                                    subtitle contains at least 5 characters
+                                </span>
+                            )}
+                            {errors.subtitle?.type === "maxLength" && (
+                                <span className="label-text-alt text-red-600 font-medium ">
+                                    subtitle contains max 50 characters
                                 </span>
                             )}
                         </div>
