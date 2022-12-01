@@ -4,8 +4,12 @@ import useUserInfo from "../../Hooks/useUserInfo";
 import SidebarToggleBtn from "../nonShared/UserProfile/SidebarToggleBtn";
 
 const Navbar = () => {
-    const { result: user, status } = useUserInfo();
-    console.log(status);
+    const { result: user, status: userStatus } = useUserInfo();
+
+    const handleLogOut = () => {
+        localStorage.setItem("access-token", "");
+    };
+
     return (
         <div className="bg-accent px-4 main_navbar">
             <div className="md:navbar w-full max-w-screen-xl mx-auto">
@@ -266,45 +270,47 @@ const Navbar = () => {
                             >
                                 <li>
                                     <NavLink
-                                        to="/userProfile"
-                                        className="justify-between capitalize font-semibold text-base text-primary hover:text-secondary rounded"
-                                    >
-                                        Profile
-                                        <Link to="/register" className="badge">
-                                            New
-                                        </Link>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
                                         to="/userFavourite"
                                         className=" capitalize font-semibold text-base text-primary hover:text-secondary rounded"
                                     >
                                         Favourite
                                     </NavLink>
                                 </li>
+                                {userStatus && (
+                                    <>
+                                        <li>
+                                            <NavLink
+                                                to="/userProfile"
+                                                className="justify-between capitalize font-semibold text-base text-primary hover:text-secondary rounded"
+                                            >
+                                                Profile
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink
+                                                to="/userDashboard"
+                                                className=" capitalize font-semibold text-base text-primary hover:text-secondary rounded"
+                                            >
+                                                Dashboard
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                )}
+
                                 <li>
-                                    <NavLink
-                                        to="/userDashboard"
-                                        className=" capitalize font-semibold text-base text-primary hover:text-secondary rounded"
-                                    >
-                                        Dashboard
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    {user ? (
+                                    {userStatus ? (
+                                        <button
+                                            className=" capitalize font-semibold text-base text-primary hover:text-secondary rounded"
+                                            onClick={() => handleLogOut()}
+                                        >
+                                            logout
+                                        </button>
+                                    ) : (
                                         <NavLink
                                             to="/login"
                                             className=" capitalize font-semibold text-base text-primary hover:text-secondary rounded"
                                         >
                                             login
-                                        </NavLink>
-                                    ) : (
-                                        <NavLink
-                                            to="/register"
-                                            className=" capitalize font-semibold text-base text-primary hover:text-secondary rounded"
-                                        >
-                                            register
                                         </NavLink>
                                     )}
                                 </li>

@@ -35,8 +35,7 @@ import useUserInfo from "./Hooks/useUserInfo";
 
 function App() {
     const userInfo = useUserInfo();
-
-    if (userInfo?.status) {
+    
         return (
             <>
                 <Navbar />
@@ -96,9 +95,7 @@ function App() {
                 <Footer />
             </>
         );
-    } else {
-        return <Loading />;
-    }
+    
 }
 
 export default App;
