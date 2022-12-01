@@ -79,10 +79,6 @@ const Navbar = () => {
                                     <div className="capitalize font-semibold text-base text-primary hover:text-secondary collapse-title py-0 min-h-0 flex items-center justify-between w-full">
                                         {" "}
                                         dropdown
-                                        {/* <img
-                                            src="https://placeimg.com/80/80/people"
-                                            className="rounded-full w-10"
-                                        /> */}
                                     </div>
                                     <div className="collapse-content rmv_btm_padding flex flex-col p-0 pl-3">
                                         <li>
@@ -110,28 +106,8 @@ const Navbar = () => {
                                     <div className="capitalize font-semibold text-base text-primary hover:text-secondary collapse-title py-0 min-h-0 flex items-center justify-between w-full">
                                         {" "}
                                         user info
-                                        {/* <img
-                                            src="https://placeimg.com/80/80/people"
-                                            className="rounded-full w-10"
-                                        /> */}
                                     </div>
                                     <div className="collapse-content rmv_btm_padding flex flex-col p-0 pl-3">
-                                        <li>
-                                            <NavLink
-                                                to="/userProfile"
-                                                className="capitalize font-semibold text-base text-primary hover:text-secondary text-center py-1"
-                                            >
-                                                profile
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink
-                                                to="/userDashboard"
-                                                className="capitalize font-semibold text-base text-primary hover:text-secondary text-center py-1"
-                                            >
-                                                dashboard
-                                            </NavLink>
-                                        </li>
                                         <li>
                                             <NavLink
                                                 to="/userFavourite"
@@ -140,8 +116,29 @@ const Navbar = () => {
                                                 favourite
                                             </NavLink>
                                         </li>
+                                        {userStatus && (
+                                            <>
+                                                <li>
+                                                    <NavLink
+                                                        to="/userProfile"
+                                                        className="capitalize font-semibold text-base text-primary hover:text-secondary text-center py-1"
+                                                    >
+                                                        profile
+                                                    </NavLink>
+                                                </li>
+                                                <li>
+                                                    <NavLink
+                                                        to="/userDashboard"
+                                                        className="capitalize font-semibold text-base text-primary hover:text-secondary text-center py-1"
+                                                    >
+                                                        dashboard
+                                                    </NavLink>
+                                                </li>
+                                            </>
+                                        )}
+
                                         <li>
-                                            {user ? (
+                                            {!userStatus ? (
                                                 <NavLink
                                                     to="/login"
                                                     className="capitalize font-semibold text-base text-primary hover:text-secondary text-center py-1"
@@ -149,12 +146,18 @@ const Navbar = () => {
                                                     login
                                                 </NavLink>
                                             ) : (
-                                                <NavLink
-                                                    to="/register"
-                                                    className="capitalize font-semibold text-base text-primary hover:text-secondary text-center py-1"
+                                                <button
+                                                    className="capitalize
+                                                    font-semibold text-base
+                                                    text-primary
+                                                    hover:text-secondary
+                                                    text-center py-1"
+                                                    onClick={() =>
+                                                        handleLogOut()
+                                                    }
                                                 >
-                                                    register
-                                                </NavLink>
+                                                    logout
+                                                </button>
                                             )}
                                         </li>
                                     </div>
