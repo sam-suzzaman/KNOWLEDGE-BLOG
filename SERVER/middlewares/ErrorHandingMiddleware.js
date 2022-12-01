@@ -4,7 +4,7 @@ exports.CommonErrorHandler = (err, req, res, next) => {
     } else {
         if (err.message) {
             res.status(err.status || 500).json({
-                success: false,
+                status: false,
                 message: err.message,
             });
         } else {

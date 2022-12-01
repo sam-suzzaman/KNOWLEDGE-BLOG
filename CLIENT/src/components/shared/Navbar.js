@@ -5,7 +5,7 @@ import SidebarToggleBtn from "../nonShared/UserProfile/SidebarToggleBtn";
 
 const Navbar = () => {
     const { result: user, status: userStatus } = useUserInfo();
-
+    console.log(userStatus);
     const handleLogOut = () => {
         localStorage.setItem("access-token", "");
     };
