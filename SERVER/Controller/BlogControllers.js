@@ -20,18 +20,25 @@ exports.getCategoryHandler = async (req, res, next) => {
 
 // POST +++++++++++++++++++++++++++++
 exports.addCategoryHandler = async (req, res, next) => {
-    console.log(req.body.category);
+    const { category } = req.body;
     try {
-        if (req.body.category) {
-            const newCategory = new CategoriesModel({
-                categoryName: req.body.category,
+        if (category) {
+            const isCategoryExist = await CategoriesModel.findOne({
+                categoryName: category,
             });
-            const result = await newCategory.save();
+            if (isCategoryExist) {
+                next(500, "Category already exists");
+            } else {
+                const newCategory = new CategoriesModel({
+                    categoryName: category,
+                });
+                const result = await newCategory.save();
 
-            res.status(200).json({
-                status: true,
-                result,
-            });
+                res.status(200).json({
+                    status: true,
+                    result,
+                });
+            }
         } else {
             next(createError(500, "Category not found!!!"));
         }
@@ -40,7 +47,6 @@ exports.addCategoryHandler = async (req, res, next) => {
     }
 };
 
-// DELETE ++++++++++++++++++++++++++
 exports.deleteCategoryHandler = async (req, res, next) => {
     try {
         const { removedIDs } = req.body;
@@ -67,3 +73,5 @@ exports.deleteCategoryHandler = async (req, res, next) => {
         next(createError(500, error.message));
     }
 };
+
+// DELETE ++++++++++++++++++++++++++

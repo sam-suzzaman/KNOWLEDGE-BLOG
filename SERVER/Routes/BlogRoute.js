@@ -10,6 +10,6 @@ BlogRoute.get("/", BlogController.getBlogs);
 // Private Routes
 BlogRoute.post("/add-category", BlogController.addCategoryHandler);
 BlogRoute.get("/get-category", BlogController.getCategoryHandler);
-BlogRoute.delete("/remove-category", BlogController.deleteCategoryHandler);
+BlogRoute.post("/remove-category", BlogController.deleteCategoryHandler);
 
 module.exports = BlogRoute;

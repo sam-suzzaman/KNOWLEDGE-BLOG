@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const CategoryAddCom = () => {
+const CategoryAddCom = ({ fetchCategories }) => {
     const {
         register,
         formState: { errors },
@@ -18,6 +18,7 @@ const CategoryAddCom = () => {
         );
         if (response?.data?.status) {
             toast.success("Category Added!!!");
+            fetchCategories();
         } else {
             toast.error("Failed to add Category!!!");
         }

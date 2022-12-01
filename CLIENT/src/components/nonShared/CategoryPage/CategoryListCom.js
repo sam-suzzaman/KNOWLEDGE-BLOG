@@ -1,32 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
-import LoadingCom from "../../shared/Loading";
 
-const CategoryListCom = () => {
-    const [categoryList, setCategoryList] = useState([]);
-    const [listLoading, setListLoading] = useState(true);
-
-    // fetching category data
-    const fetchCategories = async () => {
-        try {
-            const response = await axios.get(
-                "http://localhost:2000/api/v1/blog/get-category"
-            );
-            if (response?.data?.status) {
-                setCategoryList(response.data.result);
-                setListLoading(false);
-                console.log(categoryList);
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
-    useEffect(() => {
-        fetchCategories();
-    }, []);
-
+const CategoryListCom = ({ catagoryData, fetchCategories }) => {
     const {
         register,
         formState: { errors },
@@ -35,16 +12,24 @@ const CategoryListCom = () => {
     } = useForm();
 
     const handleFormSubmit = async (data) => {
-        console.log(data);
-        // const response = axios.post(
-        //     "http://localhost:2000/api/v1/blog/add-category"
-        // );
+        const removedID = [];
+
+        for (const p in data) {
+            data[p] === true && removedID.push(p);
+        }
+        const response = await axios.post(
+            "http://localhost:2000/api/v1/blog/remove-category",
+            { removedIDs: removedID }
+        );
+        if (response.data.status) {
+            toast.info("Deleted successfully!!!");
+            fetchCategories();
+        } else {
+            toast.warning("Delete failed!!!");
+        }
         reset();
     };
 
-    if (listLoading) {
-        return <LoadingCom />;
-    }
     return (
         <>
             <div className="w-full max-w-lg max-[768px]:mx-auto">
@@ -57,7 +42,7 @@ const CategoryListCom = () => {
                             action=""
                             onSubmit={handleSubmit(handleFormSubmit)}
                         >
-                            {categoryList?.map((category) => {
+                            {catagoryData?.map((category) => {
                                 return (
                                     <div
                                         className="form-control w-max"
