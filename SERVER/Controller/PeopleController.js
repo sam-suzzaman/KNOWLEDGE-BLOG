@@ -50,8 +50,8 @@ exports.addPeopleHandler = async (req, res, next) => {
                 const result = await newPeople.save();
                 const tokenObj = { ID: result._id, email: result.email };
                 const TOKEN = JWTGenerator(tokenObj, "1d");
-                res.status(200).send({
-                    success: true,
+                res.status(200).json({
+                    status: true,
                     message: "User Added Successfully",
                     TOKEN,
                 });
@@ -80,8 +80,8 @@ exports.loginPeopleHandler = async (req, res, next) => {
                         email: isPeopleExist.email,
                     };
                     const TOKEN = JWTGenerator(tokenObj, "1d");
-                    res.status(200).send({
-                        success: true,
+                    res.status(200).json({
+                        status: true,
                         message: "Login Successfully",
                         TOKEN,
                     });
@@ -127,8 +127,8 @@ exports.updatePeopleHandler = async (req, res, next) => {
                     { runValidators: true }
                 );
             }
-            res.status(200).send({
-                success: true,
+            res.status(200).json({
+                status: true,
                 message: "User Updated Successfully",
             });
         } else {
@@ -180,7 +180,7 @@ exports.changePasswordHandler = async (req, res, next) => {
                 { new: true }
             );
             res.status(200).send({
-                success: true,
+                status: true,
                 message: "Password Changed Successfully",
             });
         } catch (error) {

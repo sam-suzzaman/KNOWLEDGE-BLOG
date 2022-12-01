@@ -26,6 +26,15 @@ const UserDashPageNavbar = () => {
             </li>
             <li className="flex">
                 <NavLink
+                    to="/userDashboard/categories"
+                    className="font-semibold text-xl capitalize rounded-sm mb-4"
+                >
+                    <FiEdit />
+                    categories
+                </NavLink>
+            </li>
+            <li className="flex">
+                <NavLink
                     to="/userDashboard/manageMembers"
                     className="font-semibold text-xl capitalize rounded-sm mb-4"
                 >
