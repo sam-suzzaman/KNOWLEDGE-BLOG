@@ -12,6 +12,11 @@ const CategoryListCom = ({ catagoryData, fetchCategories }) => {
     } = useForm();
 
     const handleFormSubmit = async (data) => {
+        const token = localStorage.getItem("access-token");
+        const config = {
+            headers: { authorization: `Bearer ${token}` },
+        };
+
         const removedID = [];
 
         for (const p in data) {
@@ -19,7 +24,8 @@ const CategoryListCom = ({ catagoryData, fetchCategories }) => {
         }
         const response = await axios.post(
             "http://localhost:2000/api/v1/blog/remove-category",
-            { removedIDs: removedID }
+            { removedIDs: removedID },
+            config
         );
         if (response.data.status) {
             toast.info("Deleted successfully!!!");

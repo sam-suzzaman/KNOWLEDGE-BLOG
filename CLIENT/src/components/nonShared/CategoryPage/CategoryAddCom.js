@@ -12,9 +12,14 @@ const CategoryAddCom = ({ fetchCategories }) => {
     } = useForm();
 
     const handleFormSubmit = async (data) => {
+        const token = localStorage.getItem("access-token");
+        const config = {
+            headers: { authorization: `Bearer ${token}` },
+        };
         const response = await axios.post(
             "http://localhost:2000/api/v1/blog/add-category",
-            data
+            data,
+            config
         );
         if (response?.data?.status) {
             toast.success("Category Added!!!");

@@ -8,9 +8,14 @@ const ManageCategories = () => {
 
     // fetching category data
     const fetchCategories = async () => {
+        const token = localStorage.getItem("access-token");
+        const config = {
+            headers: { authorization: `Bearer ${token}` },
+        };
         try {
             const response = await axios.get(
-                "http://localhost:2000/api/v1/blog/get-category"
+                "http://localhost:2000/api/v1/blog/get-category",
+                config
             );
             if (response?.data?.status) {
                 setCategoryList(response.data.result);
