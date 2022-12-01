@@ -12,10 +12,15 @@ const CategoryAddCom = () => {
     } = useForm();
 
     const handleFormSubmit = async (data) => {
-        console.log(data);
-        // const response = axios.post(
-        //     "http://localhost:2000/api/v1/blog/add-category"
-        // );
+        const response = await axios.post(
+            "http://localhost:2000/api/v1/blog/add-category",
+            data
+        );
+        if (response?.data?.status) {
+            toast.success("Category Added!!!");
+        } else {
+            toast.error("Failed to add Category!!!");
+        }
         reset();
     };
     return (
