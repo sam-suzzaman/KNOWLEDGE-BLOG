@@ -2,6 +2,8 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import UserDashPageNavbar from "../components/nonShared/UserDashboardPage/UserDashPageNavbar";
 
+import AvatarDefault from "../assets/AvatarDefault.png";
+
 const UserDashboardPage = () => {
     return (
         <>
@@ -27,9 +29,9 @@ const UserDashboardPage = () => {
                         <div className="rounded-box p-4 overflow-y-auto w-64 bg-neutral  ">
                             {/* avater */}
                             <div className="avatar flex justify-center mb-8 mt-4">
-                                <div className="w-20 h-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <div className="w-20 h-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 p-2">
                                     <img
-                                        src="https://placeimg.com/192/192/people"
+                                        src={`${AvatarDefault}`}
                                         className="w-full"
                                         alt="avater"
                                     />

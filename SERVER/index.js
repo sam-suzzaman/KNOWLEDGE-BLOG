@@ -4,6 +4,7 @@ const port = process.env.PORT || 2000;
 
 app.use(express.json()); // json parsing
 require("dotenv").config(); // dotenv
+app.use("/public", express.static("public")); // to access photos
 
 //Cors
 const cors = require("cors");

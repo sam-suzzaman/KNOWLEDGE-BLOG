@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { BsTwitter, BsGithub } from "react-icons/bs";
 import axios from "axios";
-import { toast } from "react-toastify";
+
+import AvatarDefault from "../assets/AvatarDefault.png";
 
 const MyInfoPage = () => {
     const getMeHandler = async () => {
@@ -34,10 +35,10 @@ const MyInfoPage = () => {
                     <div className="hero lg:place-items-start">
                         <div className="hero-content flex-col lg:flex-row lg:gap-6 justify-start">
                             <div className="avatar">
-                                <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <div className="w-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 p-4">
                                     <img
-                                        src="https://placeimg.com/192/192/people"
-                                        alt="avater"
+                                        src={`${AvatarDefault}`}
+                                        alt="avatar"
                                     />
                                 </div>
                             </div>

@@ -4,6 +4,8 @@ import ProfileSideNavbar from "../components/nonShared/UserProfile/ProfileSideNa
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
+import AvatarDefault from "../assets/AvatarDefault.png";
+
 const UserProfilePage = () => {
     return (
         <section className="px-0 lg:px-10 my-12">
@@ -28,9 +30,9 @@ const UserProfilePage = () => {
                     <div className="rounded-box p-4 overflow-y-auto w-64 bg-neutral  ">
                         {/* avater */}
                         <div className="avatar flex justify-center mb-8 mt-4">
-                            <div className="w-20 h-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                            <div className="w-20 h-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 p-2">
                                 <img
-                                    src="https://placeimg.com/192/192/people"
+                                    src={`${AvatarDefault}`}
                                     className="w-full"
                                     alt="avater"
                                 />

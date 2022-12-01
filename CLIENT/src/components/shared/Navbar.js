@@ -1,9 +1,11 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import useUserInfo from "../../Hooks/useUserInfo";
 import SidebarToggleBtn from "../nonShared/UserProfile/SidebarToggleBtn";
 
 const Navbar = () => {
-    const user = false;
+    const { result: user, status } = useUserInfo();
+    console.log(status);
     return (
         <div className="bg-accent px-4 main_navbar">
             <div className="md:navbar w-full max-w-screen-xl mx-auto">
@@ -253,7 +255,7 @@ const Navbar = () => {
                             >
                                 <div className="w-10 rounded-full">
                                     <img
-                                        src="https://placeimg.com/80/80/people"
+                                        src={`${process.env.REACT_APP_AVATAR_BASE_URL}/${user?.avatar}`}
                                         alt="Profile"
                                     />
                                 </div>

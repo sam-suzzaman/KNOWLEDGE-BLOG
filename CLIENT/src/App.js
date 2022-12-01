@@ -2,6 +2,7 @@ import "./App.css";
 import "react-quill/dist/quill.snow.css";
 import { Routes, Route } from "react-router-dom";
 
+
 // React-Toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,61 +30,75 @@ import MyPostInfoPage from "./pages/MyPostInfoPage";
 import AddPostPage from "./pages/AddPostPage";
 import UpdateBlogData from "./pages/UpdateBlogData";
 import ManageMembersPage from "./pages/ManageMembersPage";
+import Loading from "./components/shared/Loading";
+import useUserInfo from "./Hooks/useUserInfo";
 
 function App() {
-    return (
-        <>
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/blog" element={<BlogPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/userProfile" element={<UserProfilePage />}>
-                    <Route path="" element={<MyInfoPage />} />
+    const userInfo = useUserInfo();
+
+    if (userInfo?.status) {
+        return (
+            <>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/blog" element={<BlogPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/userProfile" element={<UserProfilePage />}>
+                        <Route path="" element={<MyInfoPage />} />
+                        <Route
+                            path="ChangePassword"
+                            element={<ChangeUserPassword />}
+                        />
+                        <Route
+                            path="updateUserInfo"
+                            element={<UpdateUserInfoPage />}
+                        />
+                    </Route>
                     <Route
-                        path="ChangePassword"
-                        element={<ChangeUserPassword />}
-                    />
+                        path="/userDashboard"
+                        element={<UserDashboardPage />}
+                    >
+                        <Route path="" element={<MyPostInfoPage />} />
+                        <Route path="addPost" element={<AddPostPage />} />
+                        <Route
+                            path="manageMembers"
+                            element={<ManageMembersPage />}
+                        />
+                    </Route>
                     <Route
-                        path="updateUserInfo"
-                        element={<UpdateUserInfoPage />}
+                        path="/userFavourite"
+                        element={<UserFavouritePage />}
                     />
-                </Route>
-                <Route path="/userDashboard" element={<UserDashboardPage />}>
-                    <Route path="" element={<MyPostInfoPage />} />
-                    <Route path="addPost" element={<AddPostPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/login" element={<LoginPage />} />
                     <Route
-                        path="manageMembers"
-                        element={<ManageMembersPage />}
+                        path="/singleBlog/:blogID"
+                        element={<SingleBlogPage />}
                     />
-                </Route>
-                <Route path="/userFavourite" element={<UserFavouritePage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route
-                    path="/singleBlog/:blogID"
-                    element={<SingleBlogPage />}
+                    <Route path="/updateBlog" element={<UpdateBlogData />} />
+                    <Route path="/commingSoon" element={<CommingSoonPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+                <ToastContainer
+                    limit={1}
+                    position="bottom-left"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
                 />
-                <Route path="/updateBlog" element={<UpdateBlogData />} />
-                <Route path="/commingSoon" element={<CommingSoonPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-            <ToastContainer
-                limit={1}
-                position="bottom-left"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
-            <Footer />
-        </>
-    );
+                <Footer />
+            </>
+        );
+    } else {
+        return <Loading />;
+    }
 }
 
 export default App;
