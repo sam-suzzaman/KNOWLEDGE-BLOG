@@ -7,6 +7,7 @@ const PeopleSchema = new mongoose.Schema(
             type: String,
             required: [true, "Username is required"],
             trim: true,
+            default: "Unknown",
         },
         subtitle: {
             type: String,

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========Common */
+.input[disabled] {
+    background-color: transparent;
+}
+
 /* For Navbar Active class */
 .rmv_btm_padding {
     padding-bottom: 0 !important;
@@ -107,4 +112,3 @@
     max-height: 300px;
     overflow-y: scroll;
 }
-

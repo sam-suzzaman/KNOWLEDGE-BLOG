@@ -16,7 +16,6 @@ const useUserInfo = () => {
             );
             if (response?.data) {
                 // set data on state
-                console.log(response.data);
                 setUser(response.data);
             }
         } catch (error) {

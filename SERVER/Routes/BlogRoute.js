@@ -2,6 +2,7 @@ const express = require("express");
 const BlogRoute = express.Router();
 
 const userAuthenticationMiddleware = require("../middlewares/userAuthenticationMiddleware");
+const BlogThumbnailUploadMiddleware = require("../middlewares/BlogThumbnailUploadMiddleware");
 
 // Route Controllers
 const BlogController = require("../Controller/BlogControllers");
@@ -10,6 +11,11 @@ const BlogController = require("../Controller/BlogControllers");
 BlogRoute.get("/", BlogController.getBlogs);
 
 // Private Routes
+BlogRoute.post(
+    "/add-blog",
+    BlogThumbnailUploadMiddleware,
+    BlogController.addBlogHandler
+);
 BlogRoute.post(
     "/add-category",
     userAuthenticationMiddleware,

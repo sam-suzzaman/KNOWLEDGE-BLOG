@@ -1,33 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Multiselect from "multiselect-react-dropdown";
 import QuillForm from "../components/shared/QuillForm";
-
-const dropValue = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
+import MultiSelectCategory from "../components/nonShared/AddPostPage/MultiSelectCategory";
+import useUserInfo from "../Hooks/useUserInfo";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddPostPage = () => {
-    const [tags, setTags] = useState([]);
+    const user = useUserInfo();
+    const [selectedCategorires, setSelectedCategorires] = useState([]);
     const [blogContentQuill, setBlogContentQuill] = useState("");
+    const [creator, setCreator] = useState({});
     const {
         register,
         formState: { errors },
         handleSubmit,
+        reset,
     } = useForm();
 
+    // creator Object
+    useEffect(() => {
+        if (user.status) {
+            const { email: userEmail, name: userName } = user.result;
+            setCreator({ userName, userEmail });
+        }
+    }, [user]);
+
+    // to handle quill-form data
     const getQuillFormValue = (value) => {
         setBlogContentQuill(value);
     };
-    const handleTagsRemove = (list) => {
-        setTags(list);
-    };
 
-    const handleTagsSelect = (list) => {
-        setTags(list);
-    };
+    // to handle Form
+    const handleFormSubmit = async (data) => {
+        const { postTitle, postPhoto } = data;
 
-    const handleFormSubmit = (data) => {
-        const finalPost = { ...data, tags, blogContentQuill };
-        console.log(finalPost);
+        // to set "common" category
+        if (selectedCategorires.length === 0) {
+            const common = { _id: "344832uicTemp", categoryName: "common" };
+            selectedCategorires.push(common);
+        }
+
+        // checking quill value/blog conent value
+        if (true) {
+            console.log(blogContentQuill.length);
+        }
+
+        // Extract photo/thumbnail of post
+        const thumbnailFile = postPhoto[0];
+
+        // Creating Form Data
+        const formData = new FormData();
+        formData.append("postThumbnail", thumbnailFile, thumbnailFile.name);
+        formData.append("authorName", creator.userName);
+        formData.append("authorEmail", creator.userEmail);
+        formData.append("postTitle", postTitle);
+        formData.append("postCategory", selectedCategorires);
+        formData.append("postDescription", blogContentQuill);
+
+        // Sending Blog
+        // try {
+        //     const response = await axios.post(
+        //         "http://localhost:2000/api/v1/blog/add-blog",
+        //         formData
+        //     );
+        //     if (response.data.status) {
+        //         toast.info("Blog Posted!!!");
+        //         reset();
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        //     if (!error.response.data.status) {
+        //         toast.warning("Blog post failed!!!");
+        //     }
+        // }
     };
 
     return (
@@ -55,8 +101,8 @@ const AddPostPage = () => {
                                 type="text"
                                 placeholder="Type here"
                                 className="input input-bordered"
-                                value="HardCode"
-                                {...register("username")}
+                                disabled
+                                value={creator.userName || "unknown"}
                             />
                         </div>
                         {/* User Email Input Field */}
@@ -69,9 +115,9 @@ const AddPostPage = () => {
                             <input
                                 type="text"
                                 placeholder="Type here"
-                                className="input input-bordered"
-                                value="HardCode"
-                                {...register("userEmail")}
+                                className="input input-bordered bg-transparent"
+                                value={creator.userEmail}
+                                disabled
                             />
                         </div>
 
@@ -156,16 +202,8 @@ const AddPostPage = () => {
                                 </span>
                             </label>
 
-                            <Multiselect
-                                id="addPostTagDropdown"
-                                isObject={false}
-                                onKeyPressFn={function noRefCheck() {}}
-                                onRemove={handleTagsRemove}
-                                onSelect={handleTagsSelect}
-                                onSearch={function noRefCheck() {}}
-                                options={dropValue}
-                                showArrow={true}
-                                showCheckbox
+                            <MultiSelectCategory
+                                setSelectedCategorires={setSelectedCategorires}
                             />
                         </div>
 

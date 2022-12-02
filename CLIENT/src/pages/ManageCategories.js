@@ -19,8 +19,6 @@ const ManageCategories = () => {
             );
             if (response?.data?.status) {
                 setCategoryList(response.data.result);
-                // setListLoading(false);
-                console.log(categoryList);
             }
         } catch (error) {
             console.log(error.message);
@@ -29,7 +27,6 @@ const ManageCategories = () => {
     useEffect(() => {
         fetchCategories();
     }, []);
-
     return (
         <>
             <div className="w-full mx-auto py-16">

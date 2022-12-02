@@ -1,5 +1,8 @@
 const createError = require("http-errors");
 const CategoriesModel = require("../Model/CategoriesModel");
+const BlogModel = require("../Model/BlogModel");
+const { unlink } = require("fs");
+const path = require("path");
 
 // GET Routes ===================
 exports.getBlogs = (req, res) => {
@@ -19,6 +22,55 @@ exports.getCategoryHandler = async (req, res, next) => {
 };
 
 // POST +++++++++++++++++++++++++++++
+exports.addBlogHandler = async (req, res, next) => {
+    try {
+        const { postTitle } = req.body;
+        const isTitleExist = await BlogModel.findOne({ postTitle });
+        if (isTitleExist) {
+            const { filename } = req.files[0];
+            unlink(
+                path.join(
+                    __dirname,
+                    `/../public/uploads/BlogThumbnail/${filename}`
+                ),
+                (err) => {
+                    if (err) {
+                        console.log(`error from remove handler:${err.message}`);
+                    }
+                }
+            );
+            next(createError(500, "Post title already exists"));
+        } else {
+            const mergedBlog = {
+                ...req.body,
+                postThumbnail: req.files[0].filename,
+            };
+            const newBlogData = new BlogModel(mergedBlog);
+            const result = await newBlogData.save();
+
+            res.status(200).json({
+                status: true,
+                message: "Blog posted Successfully",
+                result,
+            });
+        }
+    } catch (error) {
+        const { filename } = req.files[0];
+        console.log(error);
+        unlink(
+            path.join(
+                __dirname,
+                `/../public/uploads/BlogThumbnail/${filename}`
+            ),
+            (err) => {
+                if (err) {
+                    console.log(`error from remove handler:${err.message}`);
+                }
+            }
+        );
+        next(createError(500, error.message));
+    }
+};
 exports.addCategoryHandler = async (req, res, next) => {
     const { category } = req.body;
     try {

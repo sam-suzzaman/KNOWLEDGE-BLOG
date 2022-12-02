@@ -32,7 +32,6 @@ const UpdateUserInfoPage = () => {
             twitterURL,
             fbURL,
         } = data;
-        console.log(subtitle);
         const mergedURL = [
             {
                 URLname: "facebook",
