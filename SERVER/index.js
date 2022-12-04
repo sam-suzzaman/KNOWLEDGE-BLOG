@@ -14,17 +14,27 @@ app.use(cors());
 const DBConnectionHandler = require("./Utilites/DBConnectionHandler");
 const BlogRoute = require("./Routes/BlogRoute");
 const PeopleRoute = require("./Routes/PeopleRoute");
+const Xroute = require("./Routes/TestingRoute");
 const ErrorHandingMiddleware = require("./middlewares/ErrorHandingMiddleware");
 const createError = require("http-errors");
+var bodyParser = require("body-parser");
 
 // ==============================================
 
 // Database Connection
 DBConnectionHandler();
 
+// ==========================
+// // for parsing application/json
+// app.use(bodyParser.json());
+// // for parsing application/xwww-
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+
 // main routes
 app.use("/api/v1/blog", BlogRoute); // Blog Related Route
 app.use("/api/v1/people", PeopleRoute); // User Related Route
+app.use("/testing", Xroute);
 
 // default route
 app.get("/test", (req, res) => {

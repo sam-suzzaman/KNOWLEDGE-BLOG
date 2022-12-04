@@ -28,11 +28,25 @@ const MultiSelectCategory = ({ setSelectedCategorires }) => {
     }, []);
 
     const handleTagsRemove = (list) => {
-        setSelectedCategorires(list);
+        let temp = [];
+        if (list.length) {
+            for (let i = 0; i < list.length; i++) {
+                const { categoryName } = list[i];
+                temp.push(categoryName);
+            }
+        }
+        setSelectedCategorires(temp);
     };
 
     const handleTagsSelect = (list) => {
-        setSelectedCategorires(list);
+        let temp = [];
+        if (list.length) {
+            for (let i = 0; i < list.length; i++) {
+                const { categoryName } = list[i];
+                temp.push(categoryName);
+            }
+        }
+        setSelectedCategorires(temp);
     };
     return (
         <>

@@ -2,26 +2,32 @@ import React from "react";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
 import Button from "./Button";
 
-const BlogCard = () => {
+const BlogCard = ({ blogData }) => {
     return (
         <div className="card shadow-xl group">
             <figure className="relative">
-                <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+                <img
+                    src={`${process.env.REACT_APP_BLOG_THUMBNAIL_BASE_URL}/${blogData?.postThumbnail}`}
+                    alt="Shoes"
+                />
                 {/* tags */}
                 <div className="absolute top-2 right-2 hidden group-hover:inline-block transition duration-300 ">
-                    <span className="badge bg-secondary border-secondary text-base-100 capitalize ml-2">
-                        web
-                    </span>
-                    <span className="badge bg-secondary border-secondary text-base-100 capitalize ml-2">
-                        tech
-                    </span>
+                    {blogData.postCategory.map((category) => {
+                        return (
+                            <span
+                                key={`${Math.random() + category}`}
+                                className="badge bg-secondary border-secondary text-base-100 capitalize ml-2"
+                            >
+                                {category}
+                            </span>
+                        );
+                    })}
                 </div>
             </figure>
 
             <div className="card-body">
-                <h3 className="text-lg sm:text-xl font-semibold text-secondary text-justify hover:text-primary">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Aut, neque!
+                <h3 className="text-lg sm:text-xl font-medium text-secondary hover:text-primary">
+                    {blogData?.postTitle.slice(0, 50)}
                 </h3>
                 {/* like and view */}
                 <div className="flex justify-end mb-1">
@@ -44,7 +50,7 @@ const BlogCard = () => {
                 </div>
                 <p className="">
                     <span className="badge text-primary text-xs font-normal capitalize">
-                        samsuzzaman
+                        {blogData?.authorName}
                     </span>{" "}
                     ||{" "}
                     <span className="badge text-primary text-xs font-normal capitalize">
@@ -58,7 +64,10 @@ const BlogCard = () => {
                 </p>
             </div>
             <div className=" flex justify-center mb-6">
-                <Button btnPath="/singleBlog/1" btnName="read more" />
+                <Button
+                    btnPath={`/singleBlog/${blogData?._id}`}
+                    btnName="read more"
+                />
             </div>
         </div>
     );

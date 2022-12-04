@@ -5,8 +5,33 @@ const { unlink } = require("fs");
 const path = require("path");
 
 // GET Routes ===================
-exports.getBlogs = (req, res) => {
-    res.send("Welcome to blog route");
+exports.getBlogsHandler = async (req, res, next) => {
+    try {
+        const result = await BlogModel.find({});
+        res.status(200).json({
+            status: true,
+            result,
+        });
+    } catch (error) {
+        next(createError(500, error.message));
+    }
+};
+
+exports.getSingleBlogHandler = async (req, res, next) => {
+    try {
+        const { blogID } = req.params;
+        if (blogID) {
+            const result = await BlogModel.findOne({ _id: blogID });
+            res.status(200).json({
+                status: true,
+                result,
+            });
+        } else {
+            next(createError(500, "Blog ID not found"));
+        }
+    } catch (error) {
+        next(createError(500, error.message));
+    }
 };
 
 exports.getCategoryHandler = async (req, res, next) => {
@@ -27,7 +52,7 @@ exports.addBlogHandler = async (req, res, next) => {
         const { postTitle } = req.body;
         const isTitleExist = await BlogModel.findOne({ postTitle });
         if (isTitleExist) {
-            const { filename } = req.files[0];
+            const { filename } = req?.files[0];
             unlink(
                 path.join(
                     __dirname,
@@ -41,22 +66,26 @@ exports.addBlogHandler = async (req, res, next) => {
             );
             next(createError(500, "Post title already exists"));
         } else {
-            const mergedBlog = {
-                ...req.body,
-                postThumbnail: req.files[0].filename,
-            };
-            const newBlogData = new BlogModel(mergedBlog);
-            const result = await newBlogData.save();
+            if (req.files && req.files?.length > 0) {
+                const mergedBlog = {
+                    ...req.body,
+                    postThumbnail: req?.files[0].filename,
+                    postCategory: req.body.postCategory.split(","),
+                };
+                const newBlogData = new BlogModel(mergedBlog);
+                const result = await newBlogData.save();
 
-            res.status(200).json({
-                status: true,
-                message: "Blog posted Successfully",
-                result,
-            });
+                res.status(200).json({
+                    status: true,
+                    message: "Blog posted Successfully",
+                    result,
+                });
+            } else {
+                next(500, "Blog thumbnail not available");
+            }
         }
     } catch (error) {
-        const { filename } = req.files[0];
-        console.log(error);
+        const { filename } = req?.files[0];
         unlink(
             path.join(
                 __dirname,
@@ -127,3 +156,11 @@ exports.deleteCategoryHandler = async (req, res, next) => {
 };
 
 // DELETE ++++++++++++++++++++++++++
+exports.deleteAllBlogHandler = async (req, res, next) => {
+    try {
+        await BlogModel.deleteMany({});
+        res.send("done");
+    } catch (error) {
+        next(createError(500, error.message));
+    }
+};

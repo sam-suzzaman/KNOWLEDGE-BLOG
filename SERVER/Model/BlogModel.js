@@ -26,7 +26,7 @@ const BlogSchema = new mongoose.Schema(
             required: [true, "description must have a description"],
         },
         postThumbnail: String,
-        postCategory: [{}],
+        postCategory: [String],
     },
     { timestamps: true }
 );

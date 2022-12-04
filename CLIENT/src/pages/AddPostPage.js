@@ -37,13 +37,7 @@ const AddPostPage = () => {
 
         // to set "common" category
         if (selectedCategorires.length === 0) {
-            const common = { _id: "344832uicTemp", categoryName: "common" };
-            selectedCategorires.push(common);
-        }
-
-        // checking quill value/blog conent value
-        if (true) {
-            console.log(blogContentQuill.length);
+            selectedCategorires.push("common");
         }
 
         // Extract photo/thumbnail of post
@@ -58,22 +52,26 @@ const AddPostPage = () => {
         formData.append("postCategory", selectedCategorires);
         formData.append("postDescription", blogContentQuill);
 
+        // Display the form values
+        for (const value of formData.values()) {
+            console.log(value);
+        }
         // Sending Blog
-        // try {
-        //     const response = await axios.post(
-        //         "http://localhost:2000/api/v1/blog/add-blog",
-        //         formData
-        //     );
-        //     if (response.data.status) {
-        //         toast.info("Blog Posted!!!");
-        //         reset();
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        //     if (!error.response.data.status) {
-        //         toast.warning("Blog post failed!!!");
-        //     }
-        // }
+        try {
+            const response = await axios.post(
+                "http://localhost:2000/api/v1/blog/add-blog",
+                formData
+            );
+            if (response.data.status) {
+                toast.info("Blog Posted!!!");
+                reset();
+            }
+        } catch (error) {
+            console.log(error);
+            if (!error.response.data.status) {
+                toast.warning("Blog post failed!!!");
+            }
+        }
     };
 
     return (

@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiFacebook } from "react-icons/ci";
 import { AiFillTwitterCircle, AiOutlineGithub } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SmallBlogCard from "../components/nonShared/SingleBlogPage/SmallBlogCard";
 import TextHero from "../components/shared/TextHero";
+import axios from "axios";
 
 const SingleBlogPage = () => {
+    let { blogID } = useParams();
+    const [blog, setBlog] = useState([]);
+
+    // fetch single-blog data handler
+    const fetchSingleBlog = async () => {
+        try {
+            const url = `http://localhost:2000/api/v1/blog/single-blog/${blogID}`;
+            const response = await axios.get(url);
+            response.data.status && setBlog(response.data.result);
+            console.log(response.data.result);
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+    useEffect(() => {
+        fetchSingleBlog();
+    }, [blogID]);
     return (
         <>
             <div className="single_blog_wrapper">
@@ -29,78 +47,23 @@ const SingleBlogPage = () => {
                     <div className="left col-span-3 md:col-span-2">
                         {/* blog title */}
                         <h2 className="text-primary font-semibold text-lg sm:text-2xl text-justify mb-12">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Repellendus eligendi suscipit tenetur rerum
-                            voluptate. Cum quos esse iste itaque repellat.
+                            {blog.postTitle}
                         </h2>
                         <div className="flex justify-center">
                             <img
-                                src="https://placeimg.com/1000/800/arch"
+                                src={`${process.env.REACT_APP_BLOG_THUMBNAIL_BASE_URL}/${blog.postThumbnail}`}
                                 alt=""
-                                className="w-full h-80"
+                                className="w-1/2"
                             />
                         </div>
 
                         {/* text content */}
-                        <div className=" mt-16">
-                            <p className="text-justify text-base sm:text-lg text-primary mb-8">
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Explicabo voluptas nihil omnis
-                                laboriosam facilis dolor modi delectus
-                                asperiores fuga, qui saepe magni quisquam ut
-                                illum deleniti. Odit rem iusto porro consequatur
-                                ut, aliquam sunt magnam nulla quibusdam
-                                voluptatibus ducimus aspernatur quidem.
-                                Molestias ipsam ratione exercitationem, fugit
-                                ducimus cumque dolorum facere illo porro
-                                recusandae iusto ea delectus quae error.
-                                Veritatis itaque sequi dolorem unde quaerat
-                                nulla, illo perspiciatis quisquam repudiandae
-                                maiores. Cum, aperiam ab? Quibusdam ut esse vero
-                                quia molestiae cupiditate assumenda perspiciatis
-                                minus! Molestias mollitia eaque sit vero
-                                consequuntur eum autem ullam tenetur velit?
-                                Quasi aspernatur sit et nesciunt molestias!
-                            </p>
-                            <p className="text-justify text-base sm:text-lg text-primary mb-8">
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Explicabo voluptas nihil omnis
-                                laboriosam facilis dolor modi delectus
-                                asperiores fuga, qui saepe magni quisquam ut
-                                illum deleniti. Odit rem iusto porro consequatur
-                                ut, aliquam sunt magnam nulla quibusdam
-                                voluptatibus ducimus aspernatur quidem.
-                                Molestias ipsam ratione exercitationem, fugit
-                                ducimus cumque dolorum facere illo porro
-                                recusandae iusto ea delectus quae error.
-                                Veritatis itaque sequi dolorem unde quaerat
-                                nulla, illo perspiciatis quisquam repudiandae
-                                maiores. Cum, aperiam ab? Quibusdam ut esse vero
-                                quia molestiae cupiditate assumenda perspiciatis
-                                minus! Molestias mollitia eaque sit vero
-                                consequuntur eum autem ullam tenetur velit?
-                                Quasi aspernatur sit et nesciunt molestias!
-                            </p>
-                            <p className="text-justify text-base sm:text-lg text-primary mb-8">
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Explicabo voluptas nihil omnis
-                                laboriosam facilis dolor modi delectus
-                                asperiores fuga, qui saepe magni quisquam ut
-                                illum deleniti. Odit rem iusto porro consequatur
-                                ut, aliquam sunt magnam nulla quibusdam
-                                voluptatibus ducimus aspernatur quidem.
-                                Molestias ipsam ratione exercitationem, fugit
-                                ducimus cumque dolorum facere illo porro
-                                recusandae iusto ea delectus quae error.
-                                Veritatis itaque sequi dolorem unde quaerat
-                                nulla, illo perspiciatis quisquam repudiandae
-                                maiores. Cum, aperiam ab? Quibusdam ut esse vero
-                                quia molestiae cupiditate assumenda perspiciatis
-                                minus! Molestias mollitia eaque sit vero
-                                consequuntur eum autem ullam tenetur velit?
-                                Quasi aspernatur sit et nesciunt molestias!
-                            </p>
-                        </div>
+                        <div
+                            className=" mt-16"
+                            dangerouslySetInnerHTML={{
+                                __html: blog.postDescription,
+                            }}
+                        ></div>
                     </div>
                     <div className="right bg-neutral rounded-md col-span-3 md:col-span-1">
                         {/* Author Part */}

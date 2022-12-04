@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BlogCard from "../components/shared/BlogCard";
 import BlogRow from "../components/shared/BlogRow";
 import SeeMoreBtn from "../components/shared/SeeMoreBtn";
 import TextHero from "../components/shared/TextHero";
 import { AiOutlineSearch } from "react-icons/ai";
+import axios from "axios";
 
 const BlogPage = () => {
+    const [blogs, setBlogs] = useState([]);
+
+    // Blog-data fetching handler
+    const blogDataFetchHandler = async () => {
+        const response = await axios.get(
+            "http://localhost:2000/api/v1/blog/get-blog"
+        );
+        response?.data?.status && setBlogs(response.data.result);
+    };
+    useEffect(() => {
+        blogDataFetchHandler();
+    }, []);
+
     return (
         <>
             {/* Hero Section */}
@@ -54,14 +68,9 @@ const BlogPage = () => {
             {/* All Blogs */}
             <div className="">
                 <BlogRow>
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
+                    {blogs.map((blog) => {
+                        return <BlogCard key={blog._id} blogData={blog} />;
+                    })}
                 </BlogRow>
                 <SeeMoreBtn />
             </div>

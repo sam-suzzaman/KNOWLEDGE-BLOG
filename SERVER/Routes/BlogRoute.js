@@ -8,7 +8,6 @@ const BlogThumbnailUploadMiddleware = require("../middlewares/BlogThumbnailUploa
 const BlogController = require("../Controller/BlogControllers");
 
 // Public Routes
-BlogRoute.get("/", BlogController.getBlogs);
 
 // Private Routes
 BlogRoute.post(
@@ -16,6 +15,8 @@ BlogRoute.post(
     BlogThumbnailUploadMiddleware,
     BlogController.addBlogHandler
 );
+BlogRoute.get("/get-blog", BlogController.getBlogsHandler);
+BlogRoute.get("/single-blog/:blogID", BlogController.getSingleBlogHandler);
 BlogRoute.post(
     "/add-category",
     userAuthenticationMiddleware,
@@ -31,5 +32,6 @@ BlogRoute.post(
     userAuthenticationMiddleware,
     BlogController.deleteCategoryHandler
 );
+BlogRoute.delete("/delete-all-blog", BlogController.deleteAllBlogHandler);
 
 module.exports = BlogRoute;
