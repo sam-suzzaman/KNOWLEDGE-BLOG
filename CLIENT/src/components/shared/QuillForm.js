@@ -18,6 +18,11 @@ const modules = {
 };
 
 const QuillForm = ({ getQuillFormValue }) => {
+    // const handler = (value, delta, source, editor) => {
+    //     const text = editor.getText(value);
+    //     console.log(text);
+    //     getQuillFormValue(value);
+    // };
     return (
         <div>
             <ReactQuill

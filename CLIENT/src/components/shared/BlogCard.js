@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
 import Button from "./Button";
 
@@ -27,7 +27,7 @@ const BlogCard = ({ blogData }) => {
 
             <div className="card-body">
                 <h3 className="text-lg sm:text-xl font-medium text-secondary hover:text-primary">
-                    {blogData?.postTitle.slice(0, 50)}
+                    {blogData?.postTitle.slice(0, 50)}...
                 </h3>
                 {/* like and view */}
                 <div className="flex justify-end mb-1">
@@ -58,9 +58,16 @@ const BlogCard = ({ blogData }) => {
                     </span>
                 </p>
 
+                {/* <p
+                    className="text-primary text-base text-justify mt-6"
+                    dangerouslySetInnerHTML={{
+                        __html:,
+                    }}
+                ></p> */}
                 <p className="text-primary text-base text-justify mt-6">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-                    quo voluptatum numquam sequi dolorem sunt?
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Facere maxime alias sunt assumenda sequi aliquam.
+                    Dignissimos dolor consequatur maiores debitis.
                 </p>
             </div>
             <div className=" flex justify-center mb-6">

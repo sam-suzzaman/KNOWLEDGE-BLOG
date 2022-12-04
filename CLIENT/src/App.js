@@ -6,6 +6,10 @@ import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+/* Slick slider */
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 // Components
 import Navbar from "./components/shared/Navbar";
 import Footer from "./components/shared/Footer";

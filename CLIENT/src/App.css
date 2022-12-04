@@ -30,7 +30,7 @@
 
 /* ------------------------- */
 
-/* Signle Blogs page */
+/* Single Blogs page */
 @media (min-width: 640px) {
     .single_blog_wrapper .breadcrumbs > ul > li + *:before {
         background-color: transparent;

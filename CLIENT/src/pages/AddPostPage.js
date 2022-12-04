@@ -28,6 +28,7 @@ const AddPostPage = () => {
 
     // to handle quill-form data
     const getQuillFormValue = (value) => {
+        // const htmlValue=value.root.innerHTML
         setBlogContentQuill(value);
     };
 
