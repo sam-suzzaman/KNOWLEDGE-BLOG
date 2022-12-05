@@ -40,7 +40,10 @@ const Banner = ({ bannarBlog }) => {
                                         this is the description of the article
                                     </p>
 
-                                    <Button btnPath="/" btnName="details" />
+                                    <Button
+                                        btnPath={`/singleBlog/${bannar?._id}`}
+                                        btnName="details"
+                                    />
                                 </div>
                             </div>
                         </div>
