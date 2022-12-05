@@ -1,8 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiFillLike } from "react-icons/ai";
 import Button from "./Button";
 
 const BlogCard = ({ blogData }) => {
+    const [postDate, setPostDate] = useState("");
+
+    useEffect(() => {
+        const months = [
+            "Jan",
+            "Feb",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ];
+        const date = new Date(blogData?.createdAt);
+        let day = date.getDate();
+        let month = date.getMonth();
+        let year = date.getFullYear();
+
+        const tempDate = `${day}-${months[month]}-${year}`;
+        return tempDate;
+    }, [blogData]);
+
     return (
         <div className="card shadow-xl group">
             <figure className="relative">
@@ -54,7 +80,7 @@ const BlogCard = ({ blogData }) => {
                     </span>{" "}
                     ||{" "}
                     <span className="badge text-primary text-xs font-normal capitalize">
-                        11 Jan 2022
+                        {postDate}
                     </span>
                 </p>
 
