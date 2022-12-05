@@ -22,9 +22,21 @@ exports.getSingleBlogHandler = async (req, res, next) => {
         const { blogID } = req.params;
         if (blogID) {
             const result = await BlogModel.findOne({ _id: blogID });
+
+            // update view value
+            const prevView = result.postView;
+            const newView = prevView + 1;
+            const updatedBlog = await BlogModel.findByIdAndUpdate(
+                blogID,
+                { postView: newView },
+                {
+                    new: true,
+                    runValidators: true,
+                }
+            );
             res.status(200).json({
                 status: true,
-                result,
+                result: updatedBlog,
             });
         } else {
             next(createError(500, "Blog ID not found"));

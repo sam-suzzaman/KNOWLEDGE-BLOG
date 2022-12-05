@@ -15,6 +15,8 @@ const SingleBlogPage = () => {
     let { blogID } = useParams();
     const [blog, setBlog] = useState([]);
     const [blogPostDate, setBlogPostDate] = useState("");
+
+    // to show date of post
     useEffect(() => {
         const months = [
             "Jan",
@@ -38,7 +40,7 @@ const SingleBlogPage = () => {
         const tempDate = `${day}-${months[month]}-${year}`;
 
         setBlogPostDate(tempDate);
-    }, [blog]);
+    }, [blogID]);
 
     // fetch single-blog data handler
     const fetchSingleBlog = async () => {
@@ -54,6 +56,7 @@ const SingleBlogPage = () => {
     useEffect(() => {
         fetchSingleBlog();
     }, [blogID]);
+
     return (
         <>
             <div className="single_blog_wrapper">
@@ -102,7 +105,7 @@ const SingleBlogPage = () => {
                                     <AiOutlineEye />
                                 </span>{" "}
                                 <span className="text-primary text-sm font-normal capitalize">
-                                    10
+                                    {blog?.postView}
                                 </span>
                             </p>
                             <p className="flex items-center text-end flex-grow-0 ml-2">
@@ -110,7 +113,7 @@ const SingleBlogPage = () => {
                                     <AiFillLike />
                                 </span>{" "}
                                 <span className="text-primary text-sm font-normal capitalize">
-                                    10
+                                    {blog?.postLike}
                                 </span>
                             </p>
                         </div>

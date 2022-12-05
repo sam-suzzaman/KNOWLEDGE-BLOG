@@ -27,6 +27,14 @@ const BlogSchema = new mongoose.Schema(
         },
         postThumbnail: String,
         postCategory: [String],
+        postView: {
+            type: Number,
+            default: 0,
+        },
+        postLike: {
+            type: Number,
+            default: 0,
+        },
     },
     { timestamps: true }
 );

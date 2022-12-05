@@ -62,7 +62,7 @@ const BlogCard = ({ blogData }) => {
                             <AiOutlineEye />
                         </span>{" "}
                         <span className="text-primary text-sm font-normal capitalize">
-                            10
+                            {blogData?.postView}
                         </span>
                     </p>
                     <p className="flex items-center text-end flex-grow-0 ml-2">
@@ -70,7 +70,7 @@ const BlogCard = ({ blogData }) => {
                             <AiFillLike />
                         </span>{" "}
                         <span className="text-primary text-sm font-normal capitalize">
-                            10
+                            {blogData?.postLike}
                         </span>
                     </p>
                 </div>
