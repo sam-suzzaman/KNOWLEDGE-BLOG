@@ -26,7 +26,7 @@ const BlogCard = ({ blogData }) => {
         let year = date.getFullYear();
 
         const tempDate = `${day}-${months[month]}-${year}`;
-        return tempDate;
+        setPostDate(tempDate);
     }, [blogData]);
 
     return (

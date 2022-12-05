@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { CiFacebook } from "react-icons/ci";
-import { AiFillTwitterCircle, AiOutlineGithub } from "react-icons/ai";
+import {
+    AiFillLike,
+    AiFillTwitterCircle,
+    AiOutlineEye,
+    AiOutlineGithub,
+} from "react-icons/ai";
 import { Link, useParams } from "react-router-dom";
 import SmallBlogCard from "../components/nonShared/SingleBlogPage/SmallBlogCard";
 import TextHero from "../components/shared/TextHero";
@@ -9,6 +14,31 @@ import axios from "axios";
 const SingleBlogPage = () => {
     let { blogID } = useParams();
     const [blog, setBlog] = useState([]);
+    const [blogPostDate, setBlogPostDate] = useState("");
+    useEffect(() => {
+        const months = [
+            "Jan",
+            "Feb",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ];
+        const date = new Date(blog?.createdAt);
+        let day = date.getDate();
+        let month = date.getMonth();
+        let year = date.getFullYear();
+
+        const tempDate = `${day}-${months[month]}-${year}`;
+
+        setBlogPostDate(tempDate);
+    }, [blog]);
 
     // fetch single-blog data handler
     const fetchSingleBlog = async () => {
@@ -46,15 +76,43 @@ const SingleBlogPage = () => {
                 <div className="grid grid-cols-3 gap-8">
                     <div className="left col-span-3 md:col-span-2">
                         {/* blog title */}
-                        <h2 className="text-primary font-semibold text-lg sm:text-2xl text-justify mb-12">
+                        <h2 className="text-accent font-semibold text-lg sm:text-2xl text-justify mb-12">
                             {blog.postTitle}
                         </h2>
                         <div className="flex justify-center">
                             <img
                                 src={`${process.env.REACT_APP_BLOG_THUMBNAIL_BASE_URL}/${blog.postThumbnail}`}
                                 alt=""
-                                className="w-1/2"
+                                className="w-full h-80 rounded-sm"
                             />
+                        </div>
+                        {/* Author and post date */}
+                        <p className="text-center mt-6">
+                            <span className="badge text-primary text-xs font-normal capitalize">
+                                Author Name: {blog?.authorName}
+                            </span>{" "}
+                            ||{" "}
+                            <span className="badge text-primary text-xs font-normal capitalize">
+                                Created At: {blogPostDate}
+                            </span>
+                        </p>
+                        <div className="flex justify-center mt-2">
+                            <p className="flex items-center flex-grow-0">
+                                <span className=" text-secondary text-lg font-normal bg-transparent capitalize">
+                                    <AiOutlineEye />
+                                </span>{" "}
+                                <span className="text-primary text-sm font-normal capitalize">
+                                    10
+                                </span>
+                            </p>
+                            <p className="flex items-center text-end flex-grow-0 ml-2">
+                                <span className=" text-secondary text-lg font-normal bg-transparent capitalize">
+                                    <AiFillLike />
+                                </span>{" "}
+                                <span className="text-primary text-sm font-normal capitalize">
+                                    10
+                                </span>
+                            </p>
                         </div>
 
                         {/* text content */}
