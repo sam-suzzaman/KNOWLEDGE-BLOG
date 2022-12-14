@@ -8,7 +8,9 @@ const JWTGenerator = require("../Utilites/JWT_Generator");
 // GET Controllers ====================================
 exports.getAllPeople = async (req, res, next) => {
     try {
-        const result = await PeopleModel.find({}, "name email role -_id");
+        const result = await PeopleModel.find({}).select(
+            "name email role -_id"
+        );
         res.status(200).json({
             status: true,
             message: "Data get Successfully",

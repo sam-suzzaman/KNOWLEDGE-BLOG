@@ -33,12 +33,9 @@ import MyPostInfoPage from "./pages/MyPostInfoPage";
 import AddPostPage from "./pages/AddPostPage";
 import UpdateBlogData from "./pages/UpdateBlogData";
 import ManageMembersPage from "./pages/ManageMembersPage";
-import Loading from "./components/shared/Loading";
-import useUserInfo from "./Hooks/useUserInfo";
 import ManageCategoriesPage from "./pages/ManageCategories";
 
 function App() {
-    const userInfo = useUserInfo();
 
     return (
         <>

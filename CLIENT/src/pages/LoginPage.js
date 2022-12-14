@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import LoadingPage from "./LoginPage";
 import {
     AiFillEye,
     AiFillEyeInvisible,
@@ -9,9 +10,16 @@ import { BsFacebook } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import auth from "../firebase.init";
+import { userContext } from "../context/userContext";
 
 const LoginPage = () => {
     const [showPassowrd, setShowPassword] = useState(false);
+    const [signInWithGoogle, googleUser, loading, error] =
+        useSignInWithGoogle(auth);
+
+    const { handleLoginToken } = useContext(userContext);
 
     const {
         register,
@@ -28,13 +36,26 @@ const LoginPage = () => {
             );
             const accessToken = response.data.TOKEN;
             localStorage.setItem("access-token", accessToken);
-            response.data.success && toast.success("Login Successfully");
+            handleLoginToken(accessToken);
+            toast.info("Login Successfully");
             reset();
         } catch (error) {
             console.log(error);
             !error.response.success && toast.error("Login Failed");
         }
     };
+
+    if (error) {
+        console.log(error);
+        return (
+            <div>
+                <p>Error: {error?.message}</p>
+            </div>
+        );
+    }
+    if (loading) {
+        return <LoadingPage />;
+    }
 
     return (
         <>
@@ -167,6 +188,10 @@ const LoginPage = () => {
                                 <button
                                     type="submit"
                                     className="btn btn-xs sm:btn-sm md:px-10  bg-accent text-base-100 border-accent mt-4"
+                                    onClick={() => {
+                                        signInWithGoogle();
+                                    }}
+                                    nh
                                 >
                                     <span className=" mr-1">
                                         <AiFillGoogleCircle className="text-lg" />

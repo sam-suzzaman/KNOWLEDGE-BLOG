@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import useUserInfo from "../../Hooks/useUserInfo";
 import SidebarToggleBtn from "../nonShared/UserProfile/SidebarToggleBtn";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import useUserToken from "../../Hooks/useUserToken";
+import { userContext } from "../../context/userContext";
 
 const Navbar = () => {
-    const { result: user, status: userStatus } = useUserInfo();
-    
-    const handleLogOut = () => {
-        localStorage.setItem("access-token", "");
+    const [googleUser, googleLoading, googleError] = useAuthState(auth);
+    const [signOut, loading, error] = useSignOut(auth);
+
+    const userToken = useUserToken();
+
+    const { user, userError, userLoading, userLogout, handleLoginToken } =
+        useContext(userContext);
+
+    useEffect(() => {
+        handleLoginToken(userToken);
+    }, [user?.email]);
+
+    const handleLogOut = async () => {
+        user?.email ? userLogout() : await signOut();
     };
 
     return (
@@ -116,7 +129,7 @@ const Navbar = () => {
                                                 favourite
                                             </NavLink>
                                         </li>
-                                        {userStatus && (
+                                        {(googleUser || user.status) && (
                                             <>
                                                 <li>
                                                     <NavLink
@@ -138,14 +151,7 @@ const Navbar = () => {
                                         )}
 
                                         <li>
-                                            {!userStatus ? (
-                                                <NavLink
-                                                    to="/login"
-                                                    className="capitalize font-semibold text-base text-primary hover:text-secondary text-center py-1"
-                                                >
-                                                    login
-                                                </NavLink>
-                                            ) : (
+                                            {googleUser || user.status ? (
                                                 <button
                                                     className="capitalize
                                                     font-semibold text-base
@@ -158,6 +164,13 @@ const Navbar = () => {
                                                 >
                                                     logout
                                                 </button>
+                                            ) : (
+                                                <NavLink
+                                                    to="/login"
+                                                    className="capitalize font-semibold text-base text-primary hover:text-secondary text-center py-1"
+                                                >
+                                                    login
+                                                </NavLink>
                                             )}
                                         </li>
                                     </div>
@@ -244,6 +257,7 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
+
                 {/* end part */}
                 <div className="md:navbar-end hidden md:block">
                     <div className="flex justify-end gap-2">
@@ -261,10 +275,20 @@ const Navbar = () => {
                                 className="btn btn-ghost btn-circle avatar"
                             >
                                 <div className="w-10 rounded-full">
-                                    <img
-                                        src={`${process.env.REACT_APP_AVATAR_BASE_URL}/${user?.avatar}`}
-                                        alt="Profile"
-                                    />
+                                    {googleUser ? (
+                                        <img
+                                            src={googleUser?.photoURL}
+                                            alt="Profile"
+                                        />
+                                    ) : (
+                                        <img
+                                            src={
+                                                `${process.env.REACT_APP_AVATAR_BASE_URL}/${user?.avatar}` ||
+                                                googleUser?.photoURL
+                                            }
+                                            alt="Profile"
+                                        />
+                                    )}
                                 </div>
                             </label>
                             <ul
@@ -279,7 +303,7 @@ const Navbar = () => {
                                         Favourite
                                     </NavLink>
                                 </li>
-                                {userStatus && (
+                                {(googleUser || user.status) && (
                                     <>
                                         <li>
                                             <NavLink
@@ -301,10 +325,10 @@ const Navbar = () => {
                                 )}
 
                                 <li>
-                                    {userStatus ? (
+                                    {googleUser || user.status ? (
                                         <button
                                             className=" capitalize font-semibold text-base text-primary hover:text-secondary rounded"
-                                            onClick={() => handleLogOut()}
+                                            onClick={handleLogOut}
                                         >
                                             logout
                                         </button>

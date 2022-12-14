@@ -2,7 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-// require("dotenv").config();
+
+// user context provider wrapper
+import { UserContextProviderWrapper } from "./context/userContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,7 +14,9 @@ root.render(
 
     <React.StrictMode>
         <BrowserRouter>
-            <App />
+            <UserContextProviderWrapper>
+                <App />
+            </UserContextProviderWrapper>
         </BrowserRouter>
     </React.StrictMode>
 );
