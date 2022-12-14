@@ -3,8 +3,15 @@ import BlogCard from "../components/shared/BlogCard";
 import BlogRow from "../components/shared/BlogRow";
 import SeeMoreBtn from "../components/shared/SeeMoreBtn";
 import TextHero from "../components/shared/TextHero";
+import useFetchBlog from "../Hooks/useFetchBlog";
+import Loading from "../components/shared/Loading";
 
 const UserFavouritePage = () => {
+    const [blogs, loading, error] = useFetchBlog("get-blog");
+
+    if (loading) {
+        return <Loading />;
+    }
     return (
         <>
             <TextHero>
@@ -15,14 +22,9 @@ const UserFavouritePage = () => {
             {/* All Blogs */}
             <div className="">
                 <BlogRow>
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
-                    <BlogCard />
+                    {blogs.map((blog) => {
+                        return <BlogCard key={blog._id} blogData={blog} />;
+                    })}
                 </BlogRow>
                 <SeeMoreBtn />
             </div>

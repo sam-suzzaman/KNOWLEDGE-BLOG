@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import QuillForm from "../components/shared/QuillForm";
 import MultiSelectCategory from "../components/nonShared/AddPostPage/MultiSelectCategory";
-import useUserInfo from "../Hooks/useUserInfo";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { userContext } from "../context/userContext";
+import Loading from "../components/shared/Loading";
 
 const AddPostPage = () => {
-    const user = useUserInfo();
+    const { user, loading } = useContext(userContext);
     const [selectedCategorires, setSelectedCategorires] = useState([]);
     const [blogContentQuill, setBlogContentQuill] = useState("");
     const [creator, setCreator] = useState({});
@@ -20,11 +21,9 @@ const AddPostPage = () => {
 
     // creator Object
     useEffect(() => {
-        if (user.status) {
-            const { email: userEmail, name: userName } = user.result;
-            setCreator({ userName, userEmail });
-        }
-    }, [user]);
+        const { email: userEmail, name: userName } = user;
+        setCreator({ userName, userEmail });
+    }, [user.email]);
 
     // to handle quill-form data
     const getQuillFormValue = (value) => {
@@ -75,6 +74,10 @@ const AddPostPage = () => {
         }
     };
 
+    if (loading) {
+        return <Loading />;
+    }
+
     return (
         <>
             <div className="">
@@ -101,7 +104,7 @@ const AddPostPage = () => {
                                 placeholder="Type here"
                                 className="input input-bordered"
                                 disabled
-                                value={creator.userName || "unknown"}
+                                value={creator?.userName || "unknown"}
                             />
                         </div>
                         {/* User Email Input Field */}
@@ -115,7 +118,7 @@ const AddPostPage = () => {
                                 type="text"
                                 placeholder="Type here"
                                 className="input input-bordered bg-transparent"
-                                value={creator.userEmail}
+                                value={creator?.userEmail}
                                 disabled
                             />
                         </div>

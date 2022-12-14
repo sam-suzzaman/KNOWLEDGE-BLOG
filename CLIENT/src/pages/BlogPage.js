@@ -5,20 +5,22 @@ import SeeMoreBtn from "../components/shared/SeeMoreBtn";
 import TextHero from "../components/shared/TextHero";
 import { AiOutlineSearch } from "react-icons/ai";
 import axios from "axios";
+import useFetchBlog from "../Hooks/useFetchBlog";
 
 const BlogPage = () => {
-    const [blogs, setBlogs] = useState([]);
+    // const [blogs, setBlogs] = useState([]);
+    const [blogs, loading, error] = useFetchBlog("get-blog");
 
     // Blog-data fetching handler
-    const blogDataFetchHandler = async () => {
-        const response = await axios.get(
-            "http://localhost:2000/api/v1/blog/get-blog"
-        );
-        response?.data?.status && setBlogs(response.data.result);
-    };
-    useEffect(() => {
-        blogDataFetchHandler();
-    }, []);
+    // const blogDataFetchHandler = async () => {
+    //     const response = await axios.get(
+    //         "http://localhost:2000/api/v1/blog/get-blog"
+    //     );
+    //     response?.data?.status && setBlogs(response.data.result);
+    // };
+    // useEffect(() => {
+    //     blogDataFetchHandler();
+    // }, []);
 
     return (
         <>
